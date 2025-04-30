@@ -58,6 +58,12 @@ builder.Services.AddHttpClient<StrapiService>();
 // Add AutoMapper using current assembly (or point to your profile assembly)
 builder.Services.AddAutoMapper(typeof(Program));
 
+// Force app to listen on port 80 for DigitalOcean
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(80);
+});
+
 // Build the app
 var app = builder.Build();
 
@@ -79,11 +85,5 @@ app.UseAuthorization();
 
 // Map controllers
 app.MapControllers();
-
-// Force app to listen on port 80 for DigitalOcean
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(80);
-});
 
 app.Run();
