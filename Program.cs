@@ -12,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient<IStrapiService, StrapiService>();
 builder.Services.AddHttpClient<ITourService, TourService>();
 
+builder.Services.AddTransient<IEmailService, EmailService>();
+
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
