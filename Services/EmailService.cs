@@ -18,7 +18,8 @@ public class EmailService : IEmailService
         _logger = logger;
         _configuration = configuration;
 
-        var apiKey = _configuration["SendGrid:ApiKey"];
+        var apiKey = Environment.GetEnvironmentVariable("SendGridApiKey")
+                     ?? throw new InvalidOperationException("SendGrid API key not configured.");
         _contactConfirmationTemplateId = _configuration["SendGrid:Templates:ContactConfirmation"];
 
         _sendGridClient = new SendGridClient(apiKey);
