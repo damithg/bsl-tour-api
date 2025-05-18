@@ -124,7 +124,7 @@ public class StrapiService :IStrapiService
 
     public async Task<List<ExperienceDto>> GetFeaturedExperiencesAsync()
     {
-        var url = "/api/experiences?filters[featured][$eq]=true&populate=deep";
+        var url = "/api/experiences?filters[featured][$eq]=true&populate=*&publicationState=preview";
         return await GetExperiencesFromStrapiAsync(url);
     }
 
