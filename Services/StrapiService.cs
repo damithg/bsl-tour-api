@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using BSLTours.API.Models;
 using System.Linq;
+using SendGrid.Helpers.Mail;
 
 
 namespace BSLTours.API.Services;
@@ -92,6 +93,60 @@ public class StrapiService :IStrapiService
 
         return result?.Data ?? new List<TourDto>();
     }
+
+    public async Task<List<ExperienceDto>> GetExperiencesAsync()
+    {
+        return await GetExperiencesFromStrapiAsync("/api/experiences" + StrapiQueryBuilder.BuildExperiencePopulateQuery());
+
+    }
+
+
+    public async Task<ExperienceDto?> GetExperienceBySlugAsync(string slug)
+    {
+        var url = $"/api/experiences?filters[slug][$eq]={slug}&populate=deep";
+
+        try
+        {
+            var response = await _httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<StrapiResponse<List<ExperienceDto>>>(content, _jsonOptions);
+
+            return result?.Data?.FirstOrDefault();
+        }
+        catch (Exception ex)
+        {
+            //_logger.LogError(ex, "Error fetching experience with slug '{Slug}'", slug);
+            return null;
+        }
+    }
+
+    public async Task<List<ExperienceDto>> GetFeaturedExperiencesAsync()
+    {
+        var url = "/api/experiences?filters[featured][$eq]=true&populate=deep";
+        return await GetExperiencesFromStrapiAsync(url);
+    }
+
+    // Shared helper
+    private async Task<List<ExperienceDto>> GetExperiencesFromStrapiAsync(string url)
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<StrapiResponse<List<ExperienceDto>>>(content, _jsonOptions);
+
+            return result?.Data ?? new List<ExperienceDto>();
+        }
+        catch (Exception ex)
+        {
+            //_logger.LogError(ex, "Error fetching experiences from Strapi with URL {Url}", url);
+            return new List<ExperienceDto>();
+        }
+    }
 }
 
 public class StrapiResponse<T>
@@ -101,8 +156,23 @@ public class StrapiResponse<T>
 
 
 
+
 public static class StrapiQueryBuilder
 {
+    public static string BuildExperiencePopulateQuery()
+    {
+        return string.Join("",
+            "?populate[card][populate][image]=true",
+            "&populate[highlights]=true",
+            "&populate[inclusions]=true",
+            "&populate[whatToBring]=true",
+            "&populate[galleryImage]=true",
+            "&populate[seo]=true",
+            "&populate[location]=true",
+            "&publicationState=preview"
+        );
+    }
+
     public static string GetDestinationPopulateQuery()
     {
         return string.Join("",

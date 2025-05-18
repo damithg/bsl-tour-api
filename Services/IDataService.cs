@@ -45,5 +45,10 @@ namespace BSLTours.API.Services
         Task<List<TourDto>> GetFeaturedToursAsync();
 
         // Optional: add by slug, etc. in future
+
+        Task<List<ExperienceDto>> GetExperiencesAsync();
+        Task<ExperienceDto?> GetExperienceBySlugAsync(string slug);
+        Task<List<ExperienceDto>> GetFeaturedExperiencesAsync();
+
     }
 }
