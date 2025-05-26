@@ -151,9 +151,11 @@ public class StrapiService :IStrapiService
             response.EnsureSuccessStatusCode();
 
             var content = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<StrapiResponse<List<ExperienceDto>>>(content, _jsonOptions);
+            var result = JsonSerializer.Deserialize<StrapiResponse<List<Experience>>>(content, _jsonOptions);
 
-            return result?.Data ?? new List<ExperienceDto>();
+            return result?.Data != null
+                ? result.Data.Select(e => _mapper.Map<ExperienceDto>(e)).ToList()
+                : new List<ExperienceDto>();
         }
         catch (Exception ex)
         {
@@ -161,6 +163,7 @@ public class StrapiService :IStrapiService
             return new List<ExperienceDto>();
         }
     }
+
 }
 
 public class StrapiResponse<T>
