@@ -1,12 +1,13 @@
-﻿using System;
+﻿using AutoMapper;
+using BSLTours.API.Models;
+using SendGrid.Helpers.Mail;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
-using BSLTours.API.Models;
-using System.Linq;
-using SendGrid.Helpers.Mail;
 
 
 namespace BSLTours.API.Services;
@@ -14,11 +15,13 @@ namespace BSLTours.API.Services;
 public class StrapiService :IStrapiService
 {
     private readonly HttpClient _httpClient;
+    private readonly IMapper _mapper;
     private readonly JsonSerializerOptions _jsonOptions;
 
-    public StrapiService(HttpClient httpClient)
+    public StrapiService(HttpClient httpClient, IMapper mapper)
     {
         _httpClient = httpClient;
+        _mapper = mapper;
         _httpClient.BaseAddress = new Uri("https://graceful-happiness-10e3a700b4.strapiapp.com");
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "1fbd114f8cbcc4d58c1808af61b4c682a5337233075eb967b61118cc7861710ba9f9c63acd30dd025f1ecb3ec4259c4629eab0a4e7abcdf41d68cb80651dbbc0aac72cd9ecfe86b5eab8425acfdcb7c834215131e82eb6afb755c66e4a6261a71428987b733de4b26226f1a46343f9c548e7f21f76dce9d2678a338ba5d11c5e");
 
@@ -103,17 +106,20 @@ public class StrapiService :IStrapiService
 
     public async Task<ExperienceDto?> GetExperienceBySlugAsync(string slug)
     {
-        var url = $"/api/experiences?filters[slug][$eq]={slug}&populate=deep";
+        var encodedSlug = Uri.EscapeDataString(slug);
+        var url = $"/api/experiences/by-slug/{encodedSlug}";
 
         try
         {
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
 
-            var content = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<StrapiResponse<List<ExperienceDto>>>(content, _jsonOptions);
+            var json = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<StrapiResponse<Experience>>(json, _jsonOptions);
 
-            return result?.Data?.FirstOrDefault();
+            return result?.Data is not null
+                ? _mapper.Map<ExperienceDto>(result.Data)
+                : null;
         }
         catch (Exception ex)
         {
@@ -121,6 +127,7 @@ public class StrapiService :IStrapiService
             return null;
         }
     }
+
 
     public async Task<List<ExperienceDto>> GetFeaturedExperiencesAsync()
     {
