@@ -2,9 +2,9 @@
 
 namespace BSLTours.API.Models.Dtos;
 
-public class DestinationCardDetails
+public class CardDetailsDto
 {
-    public DestinationCardImage Image { get; set; }
+    public CardImageDto Image { get; set; }
     public string Header { get; set; }
     public string Body { get; set; }
     public List<string> Tags { get; set; }

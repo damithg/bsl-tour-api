@@ -1,10 +1,11 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoMapper;
 using BSLTours.API.Models;
+using BSLTours.API.Models.Dtos;
 using BSLTours.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BSLTours.API.Controllers
 {
@@ -48,50 +49,12 @@ namespace BSLTours.API.Controllers
             return Ok(tours);
         }
 
-        //[HttpGet("by-slug/{slug}")]
-        //public async Task<ActionResult<TourPackage>> GetTourPackageBySlug(string slug)
-        //{
-        //    _logger.LogInformation($"Looking for tour package with slug: {slug}");
-
-        //    var tourPackage = await _dataService.GetTourPackageBySlugAsync(slug);
-
-        //    if (tourPackage == null)
-        //    {
-        //        _logger.LogWarning($"Tour package with slug '{slug}' not found");
-        //        return NotFound();
-        //    }
-
-        //    return Ok(tourPackage);
-        //}
-
-        //[HttpGet("{id:int}/itinerary")]
-        //public async Task<ActionResult<List<ItineraryDay>>> GetTourPackageItinerary(int id)
-        //{
-        //    var tourPackage = await _dataService.GetTourPackageByIdAsync(id);
-
-        //    if (tourPackage == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return Ok(tourPackage.ItineraryDays);
-        //}
-
-        //[HttpGet("by-slug/{slug}/itinerary")]
-        //public async Task<ActionResult<List<ItineraryDay>>> GetTourPackageItineraryBySlug(string slug)
-        //{
-        //    _logger.LogInformation($"Looking for itinerary for tour package with slug: {slug}");
-
-        //    var tourPackage = await _dataService.GetTourPackageBySlugAsync(slug);
-
-        //    if (tourPackage == null)
-        //    {
-        //        _logger.LogWarning($"Tour package with slug '{slug}' not found");
-        //        return NotFound();
-        //    }
-
-        //    return Ok(tourPackage.ItineraryDays);
-        //}
+        [HttpGet("featured/card")]
+        public async Task<ActionResult<List<TourSummaryCardDto>>> GetFeaturedDestinationCards()
+        {
+            var tourCards = await _strapiService.GetFeaturedCardsAsync("tours");
+            return Ok(tourCards);
+        }
 
         //[HttpPost]
         //public async Task<ActionResult<TourPackage>> CreateTourPackage(CreateTourPackageDto tourPackageDto)

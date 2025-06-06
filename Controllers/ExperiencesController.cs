@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BSLTours.API.Models;
+using BSLTours.API.Models.Dtos;
 
 namespace BSLTours.API.Controllers
 {
@@ -46,6 +47,13 @@ namespace BSLTours.API.Controllers
         {
             var experiences = await _strapiService.GetFeaturedExperiencesAsync();
             return Ok(experiences);
+        }
+
+        [HttpGet("featured/card")]
+        public async Task<ActionResult<List<SummaryCardDto>>> GetFeaturedDestinationCards()
+        {
+            var experienceCards = await _strapiService.GetFeaturedCardsAsync("experiences");
+            return Ok(experienceCards);
         }
     }
 

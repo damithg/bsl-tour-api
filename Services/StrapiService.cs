@@ -46,17 +46,45 @@ public class StrapiService :IStrapiService
         return result?.Data ?? new List<DestinationDto>();
     }
 
-    public async Task<List<DestinationCardDto>> GetFeaturedDestinationCardsAsync()
+    public async Task<List<CardDto>> GetFeaturedDestinationCardsAsync()
     {
         var query = "api/destinations?filters[featured][$eq]=true&populate[card][populate]=image";
         var response = await _httpClient.GetAsync(query);
         response.EnsureSuccessStatusCode();
 
         var content = await response.Content.ReadAsStringAsync();
-        var result = JsonSerializer.Deserialize<StrapiResponse<List<DestinationCardDto>>>(content, _jsonOptions);
+        var result = JsonSerializer.Deserialize<StrapiResponse<List<CardDto>>>(content, _jsonOptions);
 
-        return result?.Data ?? new List<DestinationCardDto>();
+        return result?.Data ?? new List<CardDto>();
     }
+
+    public async Task<List<object>> GetFeaturedCardsAsync(string contentType)
+    {
+        if (contentType.ToLower() == "tours")
+        {
+            var query = "api/tours?filters[featured]=true&populate[card][populate]=image";
+            var response = await _httpClient.GetAsync(query);
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<StrapiResponse<List<TourSummaryCardDto>>>(content, _jsonOptions);
+
+            return result?.Data.Cast<object>().ToList() ?? new List<object>();  // Return TourCardDto as an object
+        }
+
+        // Default behavior for other content types (destinations, experiences)
+        var queryDefault = $"api/{contentType}?filters[featured]=true&populate[card][populate]=image";
+        var responseDefault = await _httpClient.GetAsync(queryDefault);
+        responseDefault.EnsureSuccessStatusCode();
+
+        var contentDefault = await responseDefault.Content.ReadAsStringAsync();
+        var resultDefault = JsonSerializer.Deserialize<StrapiResponse<List<SummaryCardDto>>>(contentDefault, _jsonOptions);
+
+        return resultDefault?.Data.Cast<object>().ToList() ?? new List<object>();  // Return CardDto as an object
+    }
+
+
+
 
     public async Task<List<DestinationDto>> GetFeaturedDestinationsAsync()
     {
