@@ -58,30 +58,33 @@ public class StrapiService :IStrapiService
         return result?.Data ?? new List<CardDto>();
     }
 
-    public async Task<List<object>> GetFeaturedCardsAsync(string contentType)
+    public async Task<List<object>> GetFeaturedCardsAsync(string contentType, bool isFeatured)
     {
-        if (contentType.ToLower() == "tours")
+        string query = $"api/{contentType}?populate[card]";
+
+        if (isFeatured)
         {
-            var query = "api/tours?filters[featured]=true&populate[card][populate]=image";
-            var response = await _httpClient.GetAsync(query);
-            response.EnsureSuccessStatusCode();
-
-            var content = await response.Content.ReadAsStringAsync();
-            var result = JsonSerializer.Deserialize<StrapiResponse<List<TourSummaryCardDto>>>(content, _jsonOptions);
-
-            return result?.Data.Cast<object>().ToList() ?? new List<object>();  // Return TourCardDto as an object
+            query += "&filters[featured]=true";  // Only fetch featured cards
         }
 
-        // Default behavior for other content types (destinations, experiences)
-        var queryDefault = $"api/{contentType}?filters[featured]=true&populate[card][populate]=image";
-        var responseDefault = await _httpClient.GetAsync(queryDefault);
-        responseDefault.EnsureSuccessStatusCode();
+        var response = await _httpClient.GetAsync(query);
+        response.EnsureSuccessStatusCode();
 
-        var contentDefault = await responseDefault.Content.ReadAsStringAsync();
-        var resultDefault = JsonSerializer.Deserialize<StrapiResponse<List<SummaryCardDto>>>(contentDefault, _jsonOptions);
+        var content = await response.Content.ReadAsStringAsync();
 
-        return resultDefault?.Data.Cast<object>().ToList() ?? new List<object>();  // Return CardDto as an object
+        // Deserialize based on content type (either TourCardDto or CardDto)
+        if (contentType.ToLower() == "tours")
+        {
+            var result = JsonSerializer.Deserialize<StrapiResponse<List<TourSummaryCardDto>>>(content, _jsonOptions);
+            return result?.Data.Cast<object>().ToList() ?? new List<object>();  // Return TourSummaryCardDto
+        }
+        else
+        {
+            var result = JsonSerializer.Deserialize<StrapiResponse<List<SummaryCardDto>>>(content, _jsonOptions);
+            return result?.Data.Cast<object>().ToList() ?? new List<object>();  // Return SummaryCardDto
+        }
     }
+
 
 
 

@@ -36,10 +36,17 @@ namespace BSLTours.API.Controllers
             return Ok(destinations);
         }
 
-        [HttpGet("featured/card")]
+        [HttpGet("card")]
+        public async Task<ActionResult<List<CardDto>>> GetAllDestinationCards()
+        {
+            var destinationCards = await _strapiService.GetFeaturedCardsAsync("destinations", false);
+            return Ok(destinationCards);
+        }
+
+        [HttpGet("card/featured")]
         public async Task<ActionResult<List<SummaryCardDto>>> GetFeaturedDestinationCards()
         {
-            var destinationCards = await _strapiService.GetFeaturedCardsAsync("destinations");
+            var destinationCards = await _strapiService.GetFeaturedCardsAsync("destinations", true);
             return Ok(destinationCards);
         }
 
