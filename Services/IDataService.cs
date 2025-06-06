@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BSLTours.API.Models;
+using BSLTours.API.Models.Dtos;
 
 namespace BSLTours.API.Services
 {
@@ -36,8 +37,9 @@ namespace BSLTours.API.Services
     public interface IStrapiService
     {
         Task<List<DestinationDto>> GetDestinationsAsync();
-
+        Task<List<DestinationDto>> GetFeaturedDestinationsAsync();
         Task<DestinationDto?> GetDestinationBySlugAsync(string slug);
+
 
         Task<List<TourDto>> GetToursAsync();
         Task<TourDto?> GetTourBySlugAsync(string slug);
@@ -50,5 +52,7 @@ namespace BSLTours.API.Services
         Task<ExperienceDto?> GetExperienceBySlugAsync(string slug);
         Task<List<ExperienceDto>> GetFeaturedExperiencesAsync();
 
+
+        Task<List<DestinationCardDto>> GetFeaturedDestinationCardsAsync();
     }
 }

@@ -1,9 +1,10 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoMapper;
 using BSLTours.API.Models;
+using BSLTours.API.Models.Dtos;
 using BSLTours.API.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BSLTours.API.Controllers
 {
@@ -27,6 +28,21 @@ namespace BSLTours.API.Controllers
             var mapped = _mapper.Map<List<DestinationDto>>(rawData);
             return Ok(mapped);
         }
+
+        [HttpGet("featured")]
+        public async Task<ActionResult<List<DestinationDto>>> GetFeaturedDestinations()
+        {
+            var destinations = await _strapiService.GetFeaturedDestinationsAsync();
+            return Ok(destinations);
+        }
+
+        [HttpGet("featured/card")]
+        public async Task<ActionResult<List<DestinationCardDto>>> GetFeaturedDestinationCards()
+        {
+            var destinationCards = await _strapiService.GetFeaturedDestinationCardsAsync();
+            return Ok(destinationCards);
+        }
+
 
         [HttpGet("{slug}")]
         public async Task<ActionResult<DestinationDto>> GetDestinationBySlug(string slug)

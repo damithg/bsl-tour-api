@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
+using BSLTours.API.Models.Dtos;
 
 
 namespace BSLTours.API.Services;
@@ -36,6 +37,30 @@ public class StrapiService :IStrapiService
     {
         var query = "/api/destinations?" + StrapiQueryBuilder.GetDestinationPopulateQuery().TrimStart('&');
 
+        var response = await _httpClient.GetAsync(query);
+        response.EnsureSuccessStatusCode();
+
+        var content = await response.Content.ReadAsStringAsync();
+        var result = JsonSerializer.Deserialize<StrapiResponse<List<DestinationDto>>>(content, _jsonOptions);
+
+        return result?.Data ?? new List<DestinationDto>();
+    }
+
+    public async Task<List<DestinationCardDto>> GetFeaturedDestinationCardsAsync()
+    {
+        var query = "api/destinations?filters[featured][$eq]=true&populate[card][populate]=image";
+        var response = await _httpClient.GetAsync(query);
+        response.EnsureSuccessStatusCode();
+
+        var content = await response.Content.ReadAsStringAsync();
+        var result = JsonSerializer.Deserialize<StrapiResponse<List<DestinationCardDto>>>(content, _jsonOptions);
+
+        return result?.Data ?? new List<DestinationCardDto>();
+    }
+
+    public async Task<List<DestinationDto>> GetFeaturedDestinationsAsync()
+    {
+        var query = "api/destinations?filters[featured][$eq]=true&populate[card][populate]=image";
         var response = await _httpClient.GetAsync(query);
         response.EnsureSuccessStatusCode();
 
