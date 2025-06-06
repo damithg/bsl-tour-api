@@ -52,14 +52,14 @@ namespace BSLTours.API.Controllers
         [HttpGet("card")]
         public async Task<ActionResult<List<SummaryCardDto>>> GetAllExperienceCards()
         {
-            var experienceCards = await _strapiService.GetFeaturedCardsAsync("experiences", false);
+            var experienceCards = await _strapiService.GetCardsAsync("experiences", false);
             return Ok(experienceCards);
         }
 
         [HttpGet("card/featured")]
         public async Task<ActionResult<List<SummaryCardDto>>> GetFeaturedExperienceCards()
         {
-            var experienceCards = await _strapiService.GetFeaturedCardsAsync("experiences", true);
+            var experienceCards = await _strapiService.GetCardsAsync("experiences", true);
             return Ok(experienceCards);
         }
     }

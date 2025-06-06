@@ -53,6 +53,7 @@ namespace BSLTours.API.Services
         Task<List<ExperienceDto>> GetFeaturedExperiencesAsync();
 
 
-        Task<List<object>> GetFeaturedCardsAsync(string contentType, bool isFeatured);
+        Task<List<SummaryCardDto>> GetCardsAsync(string contentType, bool? isFeatured);
+
     }
 }
