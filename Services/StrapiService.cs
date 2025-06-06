@@ -62,7 +62,7 @@ public class StrapiService :IStrapiService
     {
         string query = $"api/{contentType}?populate[card][populate]=image";
 
-        if (isFeatured.HasValue)
+        if (isFeatured.HasValue && isFeatured.Value)
         {
             query += $"&filters[featured]={isFeatured.Value.ToString().ToLower()}"; // Filter by featured if specified
         }
