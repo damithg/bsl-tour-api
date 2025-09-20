@@ -51,7 +51,6 @@ public class StrapiService :IStrapiService
         var query = "api/destinations?filters[featured][$eq]=true&populate[card][populate]=image";
         var response = await _httpClient.GetAsync(query);
         response.EnsureSuccessStatusCode();
-
         var content = await response.Content.ReadAsStringAsync();
         var result = JsonSerializer.Deserialize<StrapiResponse<List<CardDto>>>(content, _jsonOptions);
 
@@ -152,11 +151,35 @@ public class StrapiService :IStrapiService
     public async Task<ExperienceDto?> GetExperienceBySlugAsync(string slug)
     {
         var encodedSlug = Uri.EscapeDataString(slug);
-        var url = $"/api/experiences/by-slug/{encodedSlug}";
 
+        // Try Method 1: Standard Strapi filtering with full population (preferred)
         try
         {
-            var response = await _httpClient.GetAsync(url);
+            var query = $"/api/experiences?filters[slug][$eq]={encodedSlug}" + StrapiQueryBuilder.BuildExperiencePopulateQuery();
+            var response = await _httpClient.GetAsync(query);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var result = JsonSerializer.Deserialize<StrapiResponse<List<Experience>>>(content, _jsonOptions);
+                var experience = result?.Data?.FirstOrDefault();
+
+                if (experience != null)
+                {
+                    return _mapper.Map<ExperienceDto>(experience);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            //_logger.LogWarning(ex, "Standard filtering failed for experience slug '{Slug}', trying fallback", slug);
+        }
+
+        // Method 2: Fallback to custom route (original approach) but with enhanced mapping
+        try
+        {
+            var customUrl = $"/api/experiences/by-slug/{encodedSlug}";
+            var response = await _httpClient.GetAsync(customUrl);
             response.EnsureSuccessStatusCode();
 
             var json = await response.Content.ReadAsStringAsync();
@@ -168,7 +191,7 @@ public class StrapiService :IStrapiService
         }
         catch (Exception ex)
         {
-            //_logger.LogError(ex, "Error fetching experience with slug '{Slug}'", slug);
+            //_logger.LogError(ex, "Both methods failed for experience slug '{Slug}'", slug);
             return null;
         }
     }
@@ -229,8 +252,10 @@ public static class StrapiQueryBuilder
             "&populate[inclusions]=true",
             "&populate[whatToBring]=true",
             "&populate[galleryImage]=true",
-            "&populate[seo]=true",
+            "&populate[seo][populate][metaImage]=true",
             "&populate[location]=true",
+            "&populate[relatedExperiences][populate][card][populate][image]=true",
+            "&populate[relatedExperiences][populate][seo]=true",
             "&publicationState=preview"
         );
     }

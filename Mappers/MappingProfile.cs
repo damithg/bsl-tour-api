@@ -14,8 +14,7 @@ namespace BSLTours.API.Mappers
                 .ForMember(dest => dest.Highlights, opt => opt.MapFrom<HighlightResolver>())
                 .ForMember(dest => dest.Inclusions, opt => opt.MapFrom<InclusionResolver>())
                 .ForMember(dest => dest.WhatToBring, opt => opt.MapFrom<WhatToBringResolver>())
-                .ForMember(dest => dest.GalleryImages,
-                    opt => opt.MapFrom(src => src.GalleryImages ?? new List<GalleryImage>()))
+                .ForMember(dest => dest.GalleryImages, opt => opt.MapFrom<GalleryImageResolver>())
                 .ForMember(dest => dest.RelatedExperiences,
                     opt => opt.MapFrom(src => src.RelatedExperiences ?? new List<Experience>()))
                 .ForMember(dest => dest.Location,
@@ -26,10 +25,6 @@ namespace BSLTours.API.Mappers
                     opt => opt.MapFrom(src => src.Card));
 
             CreateMap<Experience, RelatedExperienceDto>()
-                //.ForMember(dest => dest.Highlights,
-                //    opt => opt.MapFrom<HighlightResolverForRelated>())
-                .ForMember(dest => dest.GalleryImages,
-                    opt => opt.MapFrom(src => src.GalleryImages ?? new List<GalleryImage>()))
                 .ForMember(dest => dest.Seo,
                     opt => opt.MapFrom(src => src.Seo))
                 .ForMember(dest => dest.Card,
@@ -131,13 +126,27 @@ namespace BSLTours.API.Mappers
         }
     }
 
-    public class HighlightResolverForRelated : IValueResolver<Experience, RelatedExperienceDto, List<string>>
+    public class GalleryImageResolver : IValueResolver<Experience, ExperienceDto, List<GalleryImageDto>>
     {
-        public List<string> Resolve(Experience source, RelatedExperienceDto destination, List<string> destMember, ResolutionContext context)
+        public List<GalleryImageDto> Resolve(Experience source, ExperienceDto destination, List<GalleryImageDto> destMember, ResolutionContext context)
         {
-            return source.Highlights?.Select(h => h.Text).ToList() ?? new List<string>();
+            // Handle both singular and plural field names from Strapi
+            var galleryImages = source.GalleryImages;
+
+            if (galleryImages == null || !galleryImages.Any())
+            {
+                return new List<GalleryImageDto>();
+            }
+
+            return galleryImages.Select(img => new GalleryImageDto
+            {
+                PublicId = img.PublicId,
+                Alt = img.Alt,
+                Caption = img.Caption
+            }).ToList();
         }
     }
+
 
 
 }

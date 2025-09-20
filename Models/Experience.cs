@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace BSLTours.API.Models;
 
@@ -18,6 +19,9 @@ public class Experience
     public List<TextItem> WhatToBring { get; set; }
     public SeoMeta Seo { get; set; }
     public CardData Card { get; set; }
+
+    [JsonPropertyName("galleryImage")]
     public List<GalleryImage> GalleryImages { get; set; }
+
     public List<Experience> RelatedExperiences { get; set; }
 }
