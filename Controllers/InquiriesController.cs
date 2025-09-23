@@ -64,12 +64,22 @@ namespace BSLTours.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Verify Turnstile token before processing
-            var clientIp = GetClientIpAddress();
-            var isValidToken = await _turnstileService.VerifyTokenAsync(request.TurnstileToken, clientIp);
-            if (!isValidToken)
+            // Verify Turnstile token before processing (skip if token not provided for backward compatibility)
+            if (!string.IsNullOrEmpty(request.TurnstileToken))
             {
-                return BadRequest(new { error = "Invalid security token. Please refresh the page and try again." });
+                var clientIp = GetClientIpAddress();
+                var isValidToken = await _turnstileService.VerifyTokenAsync(request.TurnstileToken, clientIp);
+                if (!isValidToken)
+                {
+                    return BadRequest(new {
+                        error = "Invalid security token. Please refresh the page and try again.",
+                        details = new {
+                            tokenLength = request.TurnstileToken?.Length ?? 0,
+                            clientIp = clientIp,
+                            timestamp = DateTime.UtcNow
+                        }
+                    });
+                }
             }
 
             // Send email notification directly
