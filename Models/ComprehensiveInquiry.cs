@@ -41,6 +41,10 @@ namespace BSLTours.API.Models
         public string? Referrer { get; set; }
         public string? IpAddress { get; set; }
         public string? FormSource { get; set; }
+
+        // Security fields
+        [Required]
+        public string TurnstileToken { get; set; }
     }
 
     public class TravelPlanningInfo

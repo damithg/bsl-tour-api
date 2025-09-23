@@ -14,10 +14,12 @@ namespace BSLTours.API.Controllers
     public class InquiriesController : ControllerBase
     {
         private readonly IEmailService _emailService;
+        private readonly ITurnstileService _turnstileService;
 
-        public InquiriesController(IEmailService emailService)
+        public InquiriesController(IEmailService emailService, ITurnstileService turnstileService)
         {
             _emailService = emailService;
+            _turnstileService = turnstileService;
         }
 
         [HttpPost]
@@ -60,6 +62,14 @@ namespace BSLTours.API.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+
+            // Verify Turnstile token before processing
+            var clientIp = GetClientIpAddress();
+            var isValidToken = await _turnstileService.VerifyTokenAsync(request.TurnstileToken, clientIp);
+            if (!isValidToken)
+            {
+                return BadRequest(new { error = "Invalid security token. Please refresh the page and try again." });
             }
 
             // Send email notification directly
@@ -236,6 +246,25 @@ namespace BSLTours.API.Controllers
                 // Log error but don't fail the inquiry submission
                 // Could add proper logging here
             }
+        }
+
+        private string? GetClientIpAddress()
+        {
+            // Try to get the real IP from headers first (for proxies/load balancers)
+            var xForwardedFor = Request.Headers["X-Forwarded-For"].FirstOrDefault();
+            if (!string.IsNullOrEmpty(xForwardedFor))
+            {
+                return xForwardedFor.Split(',')[0].Trim();
+            }
+
+            var xRealIp = Request.Headers["X-Real-IP"].FirstOrDefault();
+            if (!string.IsNullOrEmpty(xRealIp))
+            {
+                return xRealIp;
+            }
+
+            // Fallback to connection remote IP
+            return HttpContext.Connection.RemoteIpAddress?.ToString();
         }
     }
 }
