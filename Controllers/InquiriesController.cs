@@ -34,7 +34,7 @@ namespace BSLTours.API.Controllers
             await SendLegacyInquiryNotificationEmail(inquiryDto);
 
             // Send auto-reply to the sender
-            await SendAutoReply(inquiryDto.Email, inquiryDto.Name);
+            //await SendAutoReply(inquiryDto.Email, inquiryDto.Name);
 
             return Ok(new { message = "Inquiry submitted successfully" });
         }
@@ -87,7 +87,7 @@ namespace BSLTours.API.Controllers
 
             // Send auto-reply to the sender
             var fullName = $"{request.FirstName} {request.LastName}".Trim();
-            await SendAutoReply(request.Email, fullName);
+            //await SendAutoReply(request.Email, fullName);
 
             return Ok(new { message = "Comprehensive inquiry submitted successfully" });
         }
