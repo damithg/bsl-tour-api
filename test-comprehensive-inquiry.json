@@ -1,0 +1,25 @@
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com",
+  "phone": "+1-555-123-4567",
+  "inquiryType": "tour",
+  "subjectName": "7-Day Cultural Heritage Tour",
+  "subjectId": 123,
+  "travelPlanning": {
+    "flexibleDates": false,
+    "travelMonth": "December 2025",
+    "travelDates": "2025-12-15 to 2025-12-22",
+    "adults": 2,
+    "children": 1
+  },
+  "message": "We are interested in booking a cultural heritage tour for our family. We would like to know more about the itinerary, accommodation options, and pricing. We are particularly interested in visiting ancient temples and experiencing local cuisine.",
+  "hearAboutUs": "Google Search",
+  "subscribed": true,
+  "submittedAt": "2025-10-25T10:30:00Z",
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+  "referrer": "https://www.google.com",
+  "ipAddress": "192.168.1.100",
+  "formSource": "website-tour-page",
+  "turnstileToken": "optional-test-token"
+}

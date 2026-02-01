@@ -1,247 +1,462 @@
-# BSLTours.API
+# BSLTours API
 
-BSLTours.API is a comprehensive .NET 8.0 Web API backend for the Best Sri Lanka Tours website. This API serves as the bridge between the frontend client and the Strapi CMS backend, providing structured endpoints for tours, destinations, experiences, contact forms, and more.
-
-## 🚀 Project Overview
-
-**BSLTours.API** is designed to support a tourism website showcasing Sri Lankan tours and destinations. The API integrates with a Strapi CMS for content management and provides RESTful endpoints for:
-
-- **Tour Packages**: Comprehensive tour information with itineraries, pricing, and bookings
-- **Destinations**: Detailed destination information with attractions and features
-- **Experiences**: Activity-based experiences available in different locations
-- **Contact Management**: Dynamic contact forms with email notifications
-- **Newsletter**: Subscription management
+Modern, modular REST API for Best Sri Lanka Tours - a comprehensive tour booking and management platform.
 
 ## 🏗️ Architecture
 
-The application follows a clean architecture pattern:
+This project uses a **modular, provider-based architecture** that separates concerns and allows easy swapping of service implementations without changing business logic.
 
 ```
-BSLTours.API/
-├── Controllers/              # API Controllers (HTTP endpoints)
-│   ├── ToursController.cs           # Tour package endpoints
-│   ├── DestinationsController.cs    # Destination endpoints
-│   ├── ExperiencesController.cs     # Experience endpoints
-│   ├── ContactController.cs         # Contact form handling
-│   ├── InquiriesController.cs       # Customer inquiry management
-│   ├── SubscribersController.cs     # Newsletter subscriptions
-│   └── TestimonialsController.cs    # Customer testimonials
-├── Models/                   # Domain models and DTOs
-│   ├── Dtos/                        # Data Transfer Objects
-│   ├── TourDto.cs                   # Tour data models
-│   ├── DestinationDto.cs            # Destination data models
-│   ├── ContactRequest.cs            # Contact form models
-│   └── [Various other models]
-├── Services/                 # Business logic and external integrations
-│   ├── StrapiService.cs             # Strapi CMS integration
-│   ├── EmailService.cs              # SendGrid email service
-│   ├── TourService.cs               # Tour business logic
-│   └── [Interface definitions]
-├── Mappers/                  # AutoMapper configurations
-├── Properties/               # Launch settings
-├── appsettings.json          # Production configuration
-├── appsettings.Development.json # Development configuration
-└── Program.cs                # Application entry point
+BSLTours/
+├── BSLTours.API/                    # Main Web API
+├── Communications/                   # Email & Communication Module
+│   ├── BSLTours.Communications.Abstractions/    # Interfaces & Models
+│   ├── BSLTours.Communications.Core/            # Orchestration Layer
+│   ├── BSLTours.Communications.SendGrid/        # SendGrid Implementation
+│   └── BSLTours.Communications.Postmark/        # Postmark Implementation
+├── ARCHITECTURE.md                  # Detailed architecture documentation
+└── BSLTours.sln                     # Solution file
 ```
 
-## 🛠️ Technologies Used
+See [ARCHITECTURE.md](ARCHITECTURE.md) for complete architectural details.
 
-- **.NET 8.0** - Latest .NET framework
-- **ASP.NET Core** - Web API framework
-- **C# 12** - Programming language
-- **AutoMapper 14.0.0** - Object-to-object mapping
-- **SendGrid 9.29.3** - Email service integration
-- **Swagger/OpenAPI** - API documentation
-- **Strapi CMS** - Headless content management system
-- **Docker** - Containerization support
-
-## 📱 API Endpoints
-
-### Tours
-- `GET /api/tours` - Get all tour packages
-- `GET /api/tours/{slug}` - Get tour by slug
-- `GET /api/tours/featured` - Get featured tours
-- `GET /api/tours/card` - Get tour summary cards
-- `GET /api/tours/card/featured` - Get featured tour cards
-
-### Destinations
-- `GET /api/destinations` - Get all destinations
-- `GET /api/destinations/{slug}` - Get destination by slug
-- `GET /api/destinations/featured` - Get featured destinations
-- `GET /api/destinations/card` - Get destination summary cards
-- `GET /api/destinations/card/featured` - Get featured destination cards
-
-### Experiences
-- `GET /api/experiences` - Get all experiences
-- `GET /api/experiences/{slug}` - Get experience by slug
-- `GET /api/experiences/featured` - Get featured experiences
-- `GET /api/experiences/card` - Get experience summary cards
-- `GET /api/experiences/card/featured` - Get featured experience cards
-
-### Contact & Communication
-- `POST /api/contact/send` - Submit dynamic contact forms
-- `GET /api/inquiries` - Get all inquiries (admin)
-- `POST /api/inquiries` - Submit new inquiry
-- `POST /api/subscribers` - Newsletter subscription
-- `GET /api/testimonials` - Get customer testimonials
-- `POST /api/testimonials` - Submit new testimonial
-
-## 🔧 Configuration
-
-### Environment Settings
-
-**Development** (`appsettings.Development.json`):
-- Kestrel server on port 5001
-- Enhanced logging for development
-- HTTP protocol support
-
-**Production** (`appsettings.json`):
-- SendGrid email configuration
-- Production logging levels
-- CORS enabled for all origins
-
-### External Integrations
-
-**Strapi CMS**:
-- Base URL: `https://graceful-happiness-10e3a700b4.strapiapp.com`
-- Bearer token authentication
-- Content types: tours, destinations, experiences
-
-**SendGrid Email**:
-- Transactional email service
-- Template-based confirmations
-- Contact form notifications
-
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-- .NET 8.0 SDK
-- Visual Studio 2022 or VS Code
-- Git
 
-### Local Development
+- **.NET 8.0 SDK** or later
+- **Email Provider Account** (SendGrid or Postmark)
+- **IDE**: Visual Studio 2022, VS Code, or Rider
 
-1. **Clone the repository**
-   ```bash
-   git clone [repository-url]
-   cd BSLTours.API
-   ```
-
-2. **Restore dependencies**
-   ```bash
-   dotnet restore
-   ```
-
-3. **Build the project**
-   ```bash
-   dotnet build
-   ```
-
-4. **Run the application**
-   ```bash
-   dotnet run
-   ```
-
-5. **Access the API**
-   - Development: http://localhost:5001
-   - Swagger Documentation: http://localhost:5001/swagger
-
-### Docker Support
-
-The project includes Docker support for containerized deployment:
+### 1. Clone & Build
 
 ```bash
-# Build Docker image
-docker build -t bsltours-api .
-
-# Run container
-docker run -p 80:80 bsltours-api
+git clone <repository-url>
+cd bsl-tours-api
+dotnet restore
+dotnet build
 ```
 
-## 🏗️ Data Models
+### 2. Configure Email Provider
 
-### Core Models
+The API uses a **configuration-driven approach** - no code changes needed to switch email providers!
 
-**TourDto**: Comprehensive tour information including:
-- Basic details (name, slug, duration, pricing)
-- Itinerary with daily activities
-- Inclusions/exclusions
-- Gallery images and hero image
-- Related destinations
-- Pricing tiers and add-ons
-- Reviews and ratings
+#### Option A: Use SendGrid
 
-**DestinationDto**: Destination information including:
-- Location details
-- Attractions and features
-- Image galleries
-- Related tours and experiences
+**Update `appsettings.json`:**
+```json
+{
+  "EmailService": {
+    "Provider": "SendGrid",
+    "DefaultFromEmail": "info@bestsrilankatours.com",
+    "DefaultFromName": "BSL Tours"
+  }
+}
+```
 
-**ContactRequest**: Dynamic form handling with:
-- Form type identification
-- Custom field collections
-- Email routing and templates
+**Set environment variable:**
+```powershell
+# Windows PowerShell
+$env:SendGridApiKey = "SG.your-sendgrid-api-key-here"
 
-## 🔒 Security Features
+# Linux/Mac
+export SendGridApiKey="SG.your-sendgrid-api-key-here"
+```
 
-- **CORS Configuration**: Allows cross-origin requests
-- **Input Validation**: Model validation on all endpoints
-- **Authentication**: Bearer token authentication for Strapi
-- **Email Security**: Template-based email sending to prevent injection
+**Get SendGrid API Key:**
+1. Sign up at https://sendgrid.com
+2. Go to Settings → API Keys
+3. Create API key with "Mail Send" permissions
 
-## 📊 Monitoring & Observability
+#### Option B: Use Postmark
 
-The application is prepared for observability with:
-- Structured logging (Information level in production)
-- OpenTelemetry integration points (commented out)
-- ASP.NET Core instrumentation ready
-- Request/response logging capabilities
+**Update `appsettings.json`:**
+```json
+{
+  "EmailService": {
+    "Provider": "Postmark",
+    "DefaultFromEmail": "info@bestsrilankatours.com",
+    "DefaultFromName": "BSL Tours"
+  }
+}
+```
+
+**Set environment variable:**
+```powershell
+# Windows PowerShell
+$env:PostmarkServerToken = "your-postmark-server-token-here"
+
+# Linux/Mac
+export PostmarkServerToken="your-postmark-server-token-here"
+```
+
+**Get Postmark Server Token:**
+1. Sign up at https://postmarkapp.com (free: 100 emails/month)
+2. Go to Servers → Select server → API Tokens
+3. Copy your Server API Token
+4. **Important**: Verify sender signature in Postmark dashboard!
+
+### 3. Run the API
+
+```bash
+cd BSLTours.API
+dotnet run
+```
+
+The API will start at `http://localhost:80`
+
+### 4. Test the API
+
+**Using Swagger UI:**
+- Open browser: `http://localhost:80/swagger`
+- Try the `/api/inquiries/comprehensive` endpoint
+
+**Using PowerShell:**
+```powershell
+$json = Get-Content test-comprehensive-inquiry.json -Raw
+Invoke-WebRequest -Uri "http://localhost:80/api/inquiries/comprehensive" `
+  -Method POST `
+  -ContentType "application/json" `
+  -Body $json
+```
+
+## 📧 Email Provider Setup
+
+### Switching Providers
+
+**No code changes required!** Just update configuration and restart:
+
+1. Edit `appsettings.json` → Change `"Provider"` value
+2. Set appropriate environment variable
+3. Restart API
+
+See [PROVIDER-SWITCHING.md](PROVIDER-SWITCHING.md) for detailed guide.
+
+### Troubleshooting Email Issues
+
+Run the diagnostic script:
+```powershell
+.\check-postmark-setup.ps1
+```
+
+**Common Issues:**
+
+| Error | Solution |
+|-------|----------|
+| "SendGridApiKey environment variable is not set" | Set env var: `$env:SendGridApiKey = "your-key"` |
+| "PostmarkServerToken environment variable is not set" | Set env var: `$env:PostmarkServerToken = "your-token"` |
+| "Request does not contain a valid Server token" | Check token is correct & verify sender signature in Postmark |
+| "Sender signature not verified" | Go to Postmark dashboard → Sender Signatures → Verify email |
+
+## 📋 Available Endpoints
+
+### Inquiries
+
+- **POST** `/api/inquiries` - Create legacy inquiry
+- **POST** `/api/inquiries/dynamic` - Create dynamic inquiry
+- **POST** `/api/inquiries/comprehensive` - Create comprehensive inquiry (recommended)
+
+### Contact
+
+- **POST** `/api/contact` - Send contact form submission
+
+See [TESTING.md](TESTING.md) for request/response examples and testing guide.
+
+## 🧪 Testing
+
+### Run Diagnostic Check
+
+```powershell
+.\check-postmark-setup.ps1
+```
+
+### Test Comprehensive Inquiry Endpoint
+
+A sample test file is provided:
+
+```powershell
+cd BSLTours.API
+dotnet run
+
+# In another terminal:
+cd ..
+$json = Get-Content test-comprehensive-inquiry.json -Raw
+Invoke-WebRequest -Uri "http://localhost:80/api/inquiries/comprehensive" `
+  -Method POST `
+  -ContentType "application/json" `
+  -Body $json
+```
+
+**Expected Response:**
+```json
+{
+  "message": "Comprehensive inquiry submitted successfully"
+}
+```
+
+**Verify Email Sent:**
+- Check console logs for "Email sent successfully"
+- Check recipient inbox (`info@siprea.com`)
+- Check provider dashboard (SendGrid Activity / Postmark Activity)
+
+## 🛠️ Configuration
+
+### appsettings.json Structure
+
+```json
+{
+  "EmailService": {
+    "Provider": "SendGrid",              // "SendGrid" or "Postmark"
+    "DefaultFromEmail": "info@bestsrilankatours.com",
+    "DefaultFromName": "BSL Tours",
+    "ContactConfirmationTemplateId": "d-xxx"
+  },
+  "SendGrid": {
+    "DefaultFromEmail": "info@bestsrilankatours.com",
+    "DefaultFromName": "BSL Tours"
+  },
+  "Postmark": {
+    "DefaultFromEmail": "info@bestsrilankatours.com",
+    "DefaultFromName": "BSL Tours"
+  },
+  "Turnstile": {
+    "SecretKey": "your-cloudflare-turnstile-secret"
+  }
+}
+```
+
+### Environment Variables
+
+Required environment variables based on selected provider:
+
+| Provider | Environment Variable | Where to Get It |
+|----------|---------------------|-----------------|
+| SendGrid | `SendGridApiKey` | SendGrid Dashboard → Settings → API Keys |
+| Postmark | `PostmarkServerToken` | Postmark Dashboard → Servers → API Tokens |
+
+**Security Best Practice:** Never commit API keys to source control. Use environment variables or secret management tools.
+
+### Environment-Specific Configuration
+
+Use environment-specific config files:
+
+- `appsettings.Development.json` - Local development
+- `appsettings.Staging.json` - Staging environment
+- `appsettings.Production.json` - Production environment
+
+Example:
+```json
+// appsettings.Production.json
+{
+  "EmailService": {
+    "Provider": "Postmark"  // Use Postmark in production
+  }
+}
+```
+
+## 📚 Documentation
+
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Complete architectural overview, design patterns, and roadmap
+- **[PROVIDER-SWITCHING.md](PROVIDER-SWITCHING.md)** - Email provider switching guide
+- **[TESTING.md](TESTING.md)** - Testing guide for all endpoints and methods
+- **[POSTMARK-TESTING.md](POSTMARK-TESTING.md)** - Postmark-specific testing guide
+
+## 🏢 Project Structure
+
+### BSLTours.API
+Main web API project containing:
+- **Controllers/** - API endpoints
+- **Services/** - Business logic (Strapi, Tours, Turnstile)
+- **Models/** - Data models and DTOs
+- **Mappers/** - AutoMapper profiles
+
+### Communications Module
+
+**Provider Pattern Implementation:**
+
+```
+Communications/
+├── Abstractions/           # Interfaces all providers must implement
+│   ├── IEmailProvider.cs
+│   ├── IEmailService.cs
+│   └── Models/
+├── Core/                   # Orchestration layer
+│   └── EmailService.cs
+├── SendGrid/               # SendGrid implementation
+│   └── SendGridEmailProvider.cs
+└── Postmark/               # Postmark implementation
+    └── PostmarkEmailProvider.cs
+```
+
+**Key Benefits:**
+- ✅ Switch providers via configuration only
+- ✅ Zero changes to controllers/business logic
+- ✅ Easy to add new providers (Mailgun, AWS SES, etc.)
+- ✅ Testable and maintainable
+
+## 🔧 Development
+
+### Adding a New Email Provider
+
+Want to add Mailgun, AWS SES, or another provider?
+
+1. **Create provider project:**
+   ```bash
+   dotnet new classlib -n BSLTours.Communications.Mailgun -f net8.0
+   ```
+
+2. **Implement IEmailProvider:**
+   ```csharp
+   public class MailgunEmailProvider : IEmailProvider
+   {
+       public async Task<EmailResult> SendEmailAsync(EmailMessage message, CancellationToken ct)
+       {
+           // Implementation
+       }
+   }
+   ```
+
+3. **Add to Program.cs switch:**
+   ```csharp
+   case "mailgun":
+       builder.Services.AddMailgunEmailProvider(/* ... */);
+       break;
+   ```
+
+4. **Done!** No changes to controllers needed.
+
+### Running in Development
+
+```bash
+# Watch mode (auto-reload on changes)
+dotnet watch run
+
+# Specific environment
+dotnet run --environment Staging
+```
 
 ## 🚢 Deployment
 
-See the dedicated [Deployment Guide](./README-DEPLOYMENT.md) for detailed instructions on:
-- IIS deployment on Windows hosting
-- IONOS hosting configuration
-- SSL certificate setup
-- Frontend integration
+### Environment Variables for Production
 
-### Production Considerations
+Set these in your hosting environment:
 
-- **Port Configuration**: Application is configured to listen on port 80 for DigitalOcean deployment
-- **HTTPS Redirection**: Enabled for production security
-- **Error Handling**: Comprehensive error responses
-- **Performance**: AutoMapper for efficient object mapping
+**Azure App Service:**
+```bash
+az webapp config appsettings set --name your-app --resource-group your-rg \
+  --settings EmailService__Provider="Postmark" \
+             PostmarkServerToken="your-token"
+```
 
-## 📝 Development Notes
+**Docker:**
+```bash
+docker run -e EmailService__Provider=Postmark \
+           -e PostmarkServerToken=your-token \
+           your-api-image
+```
 
-### Key Patterns Used
+**Kubernetes:**
+```yaml
+env:
+  - name: EmailService__Provider
+    value: "Postmark"
+  - name: PostmarkServerToken
+    valueFrom:
+      secretKeyRef:
+        name: email-secrets
+        key: postmark-token
+```
 
-1. **Dependency Injection**: All services registered in `Program.cs`
-2. **AutoMapper**: Automatic mapping between models and DTOs
-3. **Async/Await**: All controllers use async patterns for better performance
-4. **RESTful Design**: Standard HTTP verbs and status codes
-5. **Clean Architecture**: Separation of concerns across layers
+### Build for Production
 
-### Extension Points
-
-- **Authentication**: Ready for JWT or OAuth integration
-- **Caching**: Can be added at service layer
-- **Rate Limiting**: Can be implemented via middleware
-- **Validation**: Extensible via FluentValidation
-- **Logging**: Structured logging with Serilog possible
+```bash
+dotnet publish -c Release -o ./publish
+```
 
 ## 🤝 Contributing
 
-1. Follow existing code patterns and conventions
-2. Add appropriate unit tests for new features
-3. Update API documentation for new endpoints
-4. Ensure all endpoints return appropriate HTTP status codes
-5. Use AutoMapper for model transformations
+When adding new features:
+1. Follow the modular architecture pattern
+2. Use dependency injection
+3. Add to solution file: `dotnet sln add YourProject.csproj`
+4. Update relevant documentation
+5. Add tests (future)
+
+## 📝 API Documentation
+
+When the API is running, access interactive API documentation:
+- **Swagger UI**: `http://localhost:80/swagger`
+
+## 🔐 Security Notes
+
+- **API Keys**: Store in environment variables, never in source control
+- **Turnstile**: CAPTCHA protection on inquiry endpoints
+- **CORS**: Currently allows all origins (configure for production)
+- **HTTPS**: Enable HTTPS redirection in production
+
+## 🆘 Getting Help
+
+### Quick Diagnostic
+
+```powershell
+# Check email provider setup
+.\check-postmark-setup.ps1
+
+# View API logs
+dotnet run --verbosity detailed
+```
+
+### Common Questions
+
+**Q: How do I switch from SendGrid to Postmark?**
+A: Change `"Provider"` in `appsettings.json`, set environment variable, restart. See [PROVIDER-SWITCHING.md](PROVIDER-SWITCHING.md).
+
+**Q: Why am I getting "Server token invalid"?**
+A: Run `.\check-postmark-setup.ps1` to diagnose. Usually means env var not set or sender signature not verified.
+
+**Q: Can I use different providers in dev vs production?**
+A: Yes! Use `appsettings.Development.json` and `appsettings.Production.json`.
+
+**Q: How do I add a new provider like Mailgun?**
+A: See "Adding a New Email Provider" section above.
+
+## 📦 Dependencies
+
+### Main API
+- ASP.NET Core 8.0
+- AutoMapper
+- Swashbuckle (Swagger)
+
+### Communications Module
+- SendGrid (v9.29.3)
+- Postmark (v5.2.0)
+- Microsoft.Extensions.DependencyInjection
+- Microsoft.Extensions.Configuration
+- Microsoft.Extensions.Logging
 
 ## 📄 License
 
-This project is proprietary to BSL Tours / Siprea.
+[Your License Here]
+
+## 🎯 Roadmap
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed roadmap.
+
+### Current Phase
+- ✅ Communications module with SendGrid
+- ✅ Communications module with Postmark
+- ✅ Configuration-driven provider selection
+
+### Planned
+- Authentication module (JWT)
+- Orders/Payment module
+- Notifications (Push, SMS)
+- Storage module (file uploads)
 
 ---
 
-For deployment instructions, see [README-DEPLOYMENT.md](./README-DEPLOYMENT.md)
+**Version**: 1.0.0
+**Last Updated**: October 2025
+**Maintained By**: BSLTours Development Team
+
+For detailed architecture and design decisions, see [ARCHITECTURE.md](ARCHITECTURE.md).
