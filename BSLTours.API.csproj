@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
+    <DefaultItemExcludes>$(DefaultItemExcludes);Communications\**\*</DefaultItemExcludes>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -17,10 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Communications\BSLTours.Communications.Abstractions\BSLTours.Communications.Abstractions.csproj" />
-    <ProjectReference Include="..\Communications\BSLTours.Communications.Core\BSLTours.Communications.Core.csproj" />
-    <ProjectReference Include="..\Communications\BSLTours.Communications.SendGrid\BSLTours.Communications.SendGrid.csproj" />
-    <ProjectReference Include="..\Communications\BSLTours.Communications.Postmark\BSLTours.Communications.Postmark.csproj" />
+    <ProjectReference Include="Communications\BSLTours.Communications.Abstractions\BSLTours.Communications.Abstractions.csproj" />
+    <ProjectReference Include="Communications\BSLTours.Communications.Core\BSLTours.Communications.Core.csproj" />
+    <ProjectReference Include="Communications\BSLTours.Communications.SendGrid\BSLTours.Communications.SendGrid.csproj" />
+    <ProjectReference Include="Communications\BSLTours.Communications.Postmark\BSLTours.Communications.Postmark.csproj" />
   </ItemGroup>
 
 </Project>
