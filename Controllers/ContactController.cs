@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 using BSLTours.API.Models;
+using BSLTours.Communications.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BSLTours.API.Controllers
@@ -45,19 +46,16 @@ namespace BSLTours.API.Controllers
             // 1. Send internal notification
             await _emailService.SendEmailAsync(
                 toEmail: "info@siprea.com",
-                toName: "BSL Tours",
                 subject: subject,
-                plainTextContent: plainTextContent,
+                textContent: plainTextContent,
                 htmlContent: htmlContent
             );
 
             // 2. Optionally, send user confirmation using template
             await _emailService.SendContactConfirmationAsync(
                 toEmail: request.Email,
-                toName: request.Name ?? request.Email,
-                formType: request.FormType
+                userName: request.Name ?? request.Email
             );
-            ;
 
             return Ok(new { success = true });
         }

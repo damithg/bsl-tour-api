@@ -1,11 +1,13 @@
+using BSLTours.API.Models;
+using BSLTours.API.Models.Dtos;
+using BSLTours.API.Services;
+using BSLTours.Communications.Abstractions;
+using BSLTours.Communications.Abstractions.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BSLTours.API.Models;
-using BSLTours.API.Models.Dtos;
-using BSLTours.API.Services;
-using Microsoft.AspNetCore.Mvc;
 
 namespace BSLTours.API.Controllers
 {
@@ -39,22 +41,22 @@ namespace BSLTours.API.Controllers
             return Ok(new { message = "Inquiry submitted successfully" });
         }
 
-        [HttpPost("dynamic")]
-        public async Task<ActionResult> CreateDynamicInquiry(DynamicInquiryRequest request)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpPost("dynamic")]
+        //public async Task<ActionResult> CreateDynamicInquiry(DynamicInquiryRequest request)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            // Send email notification directly
-            await SendDynamicInquiryNotificationEmail(request);
+        //    // Send email notification directly
+        //    await SendDynamicInquiryNotificationEmail(request);
 
-            // Send auto-reply to the sender
-            await SendAutoReply(request.Email, request.Name);
+        //    // Send auto-reply to the sender
+        //    await SendAutoReply(request.Email, request.Name);
 
-            return Ok(new { message = "Dynamic inquiry submitted successfully" });
-        }
+        //    return Ok(new { message = "Dynamic inquiry submitted successfully" });
+        //}
 
         [HttpPost("comprehensive")]
         public async Task<ActionResult> CreateComprehensiveInquiry(ComprehensiveInquiryRequest request)
@@ -87,7 +89,7 @@ namespace BSLTours.API.Controllers
 
             // Send auto-reply to the sender
             var fullName = $"{request.FirstName} {request.LastName}".Trim();
-            //await SendAutoReply(request.Email, fullName);
+            await SendAutoReply(request);
 
             return Ok(new { message = "Comprehensive inquiry submitted successfully" });
         }
@@ -111,9 +113,8 @@ namespace BSLTours.API.Controllers
 
                 await _emailService.SendEmailAsync(
                     toEmail: "info@siprea.com",
-                    toName: "BSL Tours",
                     subject: subject,
-                    plainTextContent: ConvertHtmlToPlainText(emailBody),
+                    textContent: ConvertHtmlToPlainText(emailBody),
                     htmlContent: emailBody
                 );
             }
@@ -153,9 +154,8 @@ namespace BSLTours.API.Controllers
 
                 await _emailService.SendEmailAsync(
                     toEmail: "info@siprea.com",
-                    toName: "BSL Tours",
                     subject: subject,
-                    plainTextContent: ConvertHtmlToPlainText(emailBody),
+                    textContent: ConvertHtmlToPlainText(emailBody),
                     htmlContent: emailBody
                 );
             }
@@ -205,10 +205,9 @@ namespace BSLTours.API.Controllers
                 ";
 
                 await _emailService.SendEmailAsync(
-                    toEmail: "info@siprea.com",
-                    toName: "BSL Tours",
+                    toEmail: "info@bestsrilankatours.com",
                     subject: subject,
-                    plainTextContent: ConvertHtmlToPlainText(emailBody),
+                    textContent: ConvertHtmlToPlainText(emailBody),
                     htmlContent: emailBody
                 );
             }
@@ -232,31 +231,59 @@ namespace BSLTours.API.Controllers
                 .Replace("</strong>", "");
         }
 
-        private async Task SendAutoReply(string email, string name)
+        private async Task SendAutoReply(ComprehensiveInquiryRequest inquiry)
         {
             try
             {
-                const string templateId = "d-b96108d8317940d49899115025e3a162";
+                const string templateId = "41894431"; // your Postmark template ID
 
-                var dynamicData = new
+                var submittedAt = inquiry.SubmittedAt ?? DateTime.UtcNow;
+
+                // Build the data model Postmark will merge into {{ ... }} in the template
+                var templateData = new Dictionary<string, object>
                 {
-                    name = name ?? "Valued Customer",
-                    submitted_date = DateTime.UtcNow.ToString("MMMM dd, yyyy")
+                    // Used in subject + header
+                    ["guestName"] = inquiry.FirstName,                                  // "John"
+                    ["tourName"] = inquiry.SubjectName ?? "Your Sri Lanka trip",        // "7-Day Cultural Heritage Tour"
+
+                    // Trip details
+                    ["travelDates"] = inquiry.TravelPlanning?.TravelDates
+                                      ?? "Dates not specified",
+                    ["adults"] = inquiry.TravelPlanning?.Adults ?? 0,
+                    ["children"] = inquiry.TravelPlanning?.Children ?? 0,
+
+                    // Customer's note to us
+                    ["enquiryMessage"] = inquiry.Message,
+
+                    // Contact info
+                    ["guestEmail"] = inquiry.Email,
+                    ["guestPhone"] = inquiry.Phone ?? string.Empty,
+
+                    // Marketing insight
+                    ["hearAboutUs"] = inquiry.HearAboutUs ?? "Not specified",
+
+                    // Optional extras you might show in footer
+                    ["submitted_date"] = submittedAt.ToString("MMMM dd, yyyy")
                 };
 
                 await _emailService.SendTemplatedEmailAsync(
-                    toEmail: email,
-                    toName: name ?? "Valued Customer",
+                    toEmail: inquiry.Email,
                     templateId: templateId,
-                    dynamicData: dynamicData
+                    templateData: templateData
                 );
             }
             catch (Exception ex)
             {
-                // Log error but don't fail the inquiry submission
-                // Could add proper logging here
+                // swallow but log
+                //_logger.LogError(ex,
+                //    "Failed to send auto-reply email to {Email} for subject {SubjectName}",
+                //    inquiry.Email,
+                //    inquiry.SubjectName
+                //);
             }
         }
+
+
 
         private string? GetClientIpAddress()
         {

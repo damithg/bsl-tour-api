@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Local launch settings (contains API keys)
+**/Properties/launchSettings.json

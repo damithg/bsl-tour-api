@@ -1,4 +1,8 @@
+using System;
 using BSLTours.API.Services;
+using BSLTours.Communications.Core.Extensions;
+using BSLTours.Communications.SendGrid.Extensions;
+using BSLTours.Communications.Postmark.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,7 +17,39 @@ builder.Services.AddHttpClient<IStrapiService, StrapiService>();
 builder.Services.AddHttpClient<ITourService, TourService>();
 builder.Services.AddHttpClient<ITurnstileService, TurnstileService>();
 
-builder.Services.AddTransient<IEmailService, EmailService>();
+// Configure email services with new Communications library
+// Provider selection is driven by appsettings.json "EmailService:Provider"
+var emailProvider = builder.Configuration["EmailService:Provider"]?.ToLower()
+    ?? throw new InvalidOperationException("EmailService:Provider is not configured in appsettings.json");
+
+switch (emailProvider)
+{
+    case "sendgrid":
+        builder.Services.AddSendGridEmailProvider(options =>
+        {
+            options.ApiKey = Environment.GetEnvironmentVariable("SendGridApiKey")
+                ?? throw new InvalidOperationException("SendGridApiKey environment variable is not set");
+            options.DefaultFromEmail = builder.Configuration["SendGrid:DefaultFromEmail"];
+            options.DefaultFromName = builder.Configuration["SendGrid:DefaultFromName"];
+        });
+        break;
+
+    case "postmark":
+        builder.Services.AddPostmarkEmailProvider(options =>
+        {
+            options.ServerToken = Environment.GetEnvironmentVariable("PostmarkServerToken")
+                ?? throw new InvalidOperationException("PostmarkServerToken environment variable is not set");
+            options.DefaultFromEmail = builder.Configuration["Postmark:DefaultFromEmail"];
+            options.DefaultFromName = builder.Configuration["Postmark:DefaultFromName"];
+        });
+        break;
+
+    default:
+        throw new InvalidOperationException(
+            $"Unknown email provider '{emailProvider}'. Supported providers: SendGrid, Postmark");
+}
+
+builder.Services.AddEmailService(builder.Configuration);
 
 
 builder.Services.AddControllers().AddJsonOptions(options =>

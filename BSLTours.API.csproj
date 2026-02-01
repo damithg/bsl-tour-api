@@ -16,4 +16,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Communications\BSLTours.Communications.Abstractions\BSLTours.Communications.Abstractions.csproj" />
+    <ProjectReference Include="..\Communications\BSLTours.Communications.Core\BSLTours.Communications.Core.csproj" />
+    <ProjectReference Include="..\Communications\BSLTours.Communications.SendGrid\BSLTours.Communications.SendGrid.csproj" />
+    <ProjectReference Include="..\Communications\BSLTours.Communications.Postmark\BSLTours.Communications.Postmark.csproj" />
+  </ItemGroup>
+
 </Project>
