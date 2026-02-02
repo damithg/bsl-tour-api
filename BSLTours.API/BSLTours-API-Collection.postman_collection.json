@@ -1,1146 +1,368 @@
 {
 	"info": {
 		"_postman_id": "bsl-tours-api-collection",
-		"name": "BSLTours API & Strapi CMS Collection",
-		"description": "Comprehensive collection for testing BSLTours.API endpoints and downstream Strapi CMS services. Includes authentication, environment variables, and example requests for development and testing.",
+		"name": "BSLTours API Collection",
+		"description": "API collection for testing BSLTours.API endpoints. Includes tours, destinations, experiences, contact forms, and inquiries.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "bsl-tours-collection"
 	},
 	"item": [
 		{
-			"name": "BSLTours API",
+			"name": "Tours",
 			"item": [
 				{
-					"name": "Tours",
-					"item": [
-						{
-							"name": "Get All Tours",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/tours",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"tours"
-									]
-								},
-								"description": "Retrieve all tour packages from the API"
-							}
-						},
-						{
-							"name": "Get Tour by Slug",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/tours/{{tour_slug}}",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"tours",
-										"{{tour_slug}}"
-									]
-								},
-								"description": "Get a specific tour package by its slug identifier"
-							}
-						},
-						{
-							"name": "Get Featured Tours",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/tours/featured",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"tours",
-										"featured"
-									]
-								},
-								"description": "Retrieve all featured tour packages"
-							}
-						},
-						{
-							"name": "Get All Tour Cards",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/tours/card",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"tours",
-										"card"
-									]
-								},
-								"description": "Get tour summary cards for listing pages"
-							}
-						},
-						{
-							"name": "Get Featured Tour Cards",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/tours/card/featured",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"tours",
-										"card",
-										"featured"
-									]
-								},
-								"description": "Get featured tour summary cards"
-							}
-						}
-					],
-					"description": "Tour package related endpoints"
-				},
-				{
-					"name": "Destinations",
-					"item": [
-						{
-							"name": "Get All Destinations",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/destinations",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"destinations"
-									]
-								},
-								"description": "Retrieve all destinations"
-							}
-						},
-						{
-							"name": "Get Destination by Slug",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/destinations/{{destination_slug}}",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"destinations",
-										"{{destination_slug}}"
-									]
-								},
-								"description": "Get a specific destination by its slug"
-							}
-						},
-						{
-							"name": "Get Featured Destinations",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/destinations/featured",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"destinations",
-										"featured"
-									]
-								},
-								"description": "Retrieve featured destinations"
-							}
-						},
-						{
-							"name": "Get All Destination Cards",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/destinations/card",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"destinations",
-										"card"
-									]
-								},
-								"description": "Get destination summary cards"
-							}
-						},
-						{
-							"name": "Get Featured Destination Cards",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/destinations/card/featured",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"destinations",
-										"card",
-										"featured"
-									]
-								},
-								"description": "Get featured destination summary cards"
-							}
-						}
-					],
-					"description": "Destination related endpoints"
-				},
-				{
-					"name": "Experiences",
-					"item": [
-						{
-							"name": "Get All Experiences",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/experiences",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"experiences"
-									]
-								},
-								"description": "Retrieve all experiences"
-							}
-						},
-						{
-							"name": "Get Experience by Slug",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/experiences/{{experience_slug}}",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"experiences",
-										"{{experience_slug}}"
-									]
-								},
-								"description": "Get a specific experience by its slug"
-							}
-						},
-						{
-							"name": "Get Featured Experiences",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/experiences/featured",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"experiences",
-										"featured"
-									]
-								},
-								"description": "Retrieve featured experiences"
-							}
-						},
-						{
-							"name": "Get All Experience Cards",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/experiences/card",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"experiences",
-										"card"
-									]
-								},
-								"description": "Get experience summary cards"
-							}
-						},
-						{
-							"name": "Get Featured Experience Cards",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/experiences/card/featured",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"experiences",
-										"card",
-										"featured"
-									]
-								},
-								"description": "Get featured experience summary cards"
-							}
-						}
-					],
-					"description": "Experience related endpoints"
-				},
-				{
-					"name": "Contact & Communication",
-					"item": [
-						{
-							"name": "Send Contact Form",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"formType\": \"Contact Inquiry\",\n  \"email\": \"customer@example.com\",\n  \"name\": \"John Doe\",\n  \"fields\": {\n    \"message\": \"I'm interested in your Sri Lanka tour packages. Could you provide more information?\",\n    \"phone\": \"+1-555-123-4567\",\n    \"preferredContactTime\": \"Evening\",\n    \"tourInterest\": \"Cultural Tours\"\n  }\n}"
-								},
-								"url": {
-									"raw": "{{api_base_url}}/api/contact/send",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"contact",
-										"send"
-									]
-								},
-								"description": "Submit a dynamic contact form with custom fields"
-							}
-						},
-						{
-							"name": "Submit New Inquiry (Legacy)",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"name\": \"Jane Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"message\": \"We are a group of 8 people planning to visit Sri Lanka in December. Could you recommend suitable tour packages?\",\n  \"phone\": \"+1-555-987-6543\",\n  \"tourInterest\": \"Cultural Tours\",\n  \"travelDate\": \"2024-12-15T00:00:00Z\",\n  \"travelPartySize\": 8\n}"
-								},
-								"url": {
-									"raw": "{{api_base_url}}/api/inquiries",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"inquiries"
-									]
-								},
-								"description": "Submit a new customer inquiry using legacy format"
-							}
-						},
-						{
-							"name": "Submit Dynamic Inquiry - Family Tour",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"inquiryType\": \"Family Tour\",\n  \"email\": \"family@example.com\",\n  \"name\": \"The Johnson Family\",\n  \"message\": \"Planning our first family visit to Sri Lanka with children\",\n  \"phone\": \"+1-555-123-4567\",\n  \"tourInterest\": \"Family-Friendly Cultural Tours\",\n  \"travelDate\": \"2024-11-20T00:00:00Z\",\n  \"travelPartySize\": 5,\n  \"additionalFields\": {\n    \"childrenAges\": \"8, 12, 15\",\n    \"wheelchairAccessNeeded\": \"No\",\n    \"photographyInterest\": \"Wildlife and landscapes\",\n    \"cookingClassInterest\": \"Yes\",\n    \"preferredGuideLanguage\": \"English\",\n    \"accommodationBudget\": \"Mid-range\",\n    \"dietaryRestrictions\": \"None\",\n    \"specialRequests\": \"Child-friendly activities\"\n  }\n}"
-								},
-								"url": {
-									"raw": "{{api_base_url}}/api/inquiries/dynamic",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"inquiries",
-										"dynamic"
-									]
-								},
-								"description": "Submit a dynamic inquiry with custom fields for family tours"
-							}
-						},
-						{
-							"name": "Submit Dynamic Inquiry - Corporate Group",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"inquiryType\": \"Corporate Group Booking\",\n  \"email\": \"sarah@techcorp.com\",\n  \"name\": \"Sarah Johnson\",\n  \"message\": \"Corporate team building trip inquiry for our annual retreat\",\n  \"phone\": \"+1-555-456-7890\",\n  \"tourInterest\": \"Adventure & Team Building Package\",\n  \"travelDate\": \"2024-10-15T00:00:00Z\",\n  \"travelPartySize\": 25,\n  \"additionalFields\": {\n    \"companyName\": \"TechCorp Solutions\",\n    \"budgetRange\": \"$50,000 - $75,000\",\n    \"corporateDiscountCode\": \"CORP2024\",\n    \"teamBuildingActivities\": \"Yes\",\n    \"cateringRequirements\": \"Vegetarian and Halal options\",\n    \"transportationNeeds\": \"Bus charter from Colombo\",\n    \"specialRequests\": \"Team photos and certificates\",\n    \"contactPersonRole\": \"HR Manager\",\n    \"urgencyLevel\": \"High\",\n    \"flexibleDates\": \"Yes, +/- 1 week\",\n    \"previousGroupExperience\": \"First time organizing international trip\"\n  }\n}"
-								},
-								"url": {
-									"raw": "{{api_base_url}}/api/inquiries/dynamic",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"inquiries",
-										"dynamic"
-									]
-								},
-								"description": "Submit a dynamic inquiry for corporate group bookings with extensive custom fields"
-							}
-						},
-						{
-							"name": "Submit Dynamic Inquiry - Luxury Honeymoon",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"inquiryType\": \"Luxury Honeymoon Package\",\n  \"email\": \"alex.jamie@example.com\",\n  \"name\": \"Alex & Jamie\",\n  \"message\": \"Planning our dream honeymoon in Sri Lanka\",\n  \"phone\": \"+1-555-789-0123\",\n  \"tourInterest\": \"Romantic Luxury Package\",\n  \"travelDate\": \"2024-12-20T00:00:00Z\",\n  \"travelPartySize\": 2,\n  \"additionalFields\": {\n    \"anniversaryDate\": \"2024-12-20\",\n    \"romanticDinnerRequest\": \"Beachside candlelit dinner\",\n    \"spaPreferences\": \"Couples massage and wellness treatments\",\n    \"roomType\": \"Ocean view luxury suite\",\n    \"weddingCelebration\": \"Just married - December 15th\",\n    \"photographyPackage\": \"Professional photographer for special moments\",\n    \"specialOccasionBudget\": \"Premium - no budget constraints\",\n    \"preferredActivities\": \"Sunset cruise, private beach access, cultural experiences\",\n    \"dietaryPreferences\": \"Fine dining, local cuisine experiences\"\n  }\n}"
-								},
-								"url": {
-									"raw": "{{api_base_url}}/api/inquiries/dynamic",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"inquiries",
-										"dynamic"
-									]
-								},
-								"description": "Submit a dynamic inquiry for luxury honeymoon packages"
-							}
-						},
-						{
-							"name": "Submit Comprehensive Inquiry - Tour",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"firstName\": \"Sarah\",\n  \"lastName\": \"Johnson\",\n  \"email\": \"sarah.johnson@gmail.com\",\n  \"phone\": \"+44 7891 234567\",\n  \"inquiryType\": \"tour\",\n  \"subjectName\": \"Cultural Triangle Explorer\",\n  \"subjectId\": 15,\n  \"message\": \"Hi! My husband and I are interested in the Cultural Triangle Explorer tour for our family trip. We have a 10-year-old daughter who loves history. Could you please let us know about family-friendly accommodations and if there are any age restrictions for the sites?\",\n  \"travelPlanning\": {\n    \"flexibleDates\": true,\n    \"travelMonth\": null,\n    \"travelDates\": \"spring 2025, avoiding school holidays\",\n    \"adults\": 2,\n    \"children\": 1\n  },\n  \"hearAboutUs\": \"TripAdvisor\",\n  \"subscribed\": true,\n  \"submittedAt\": \"2025-01-20T14:30:00.000Z\",\n  \"userAgent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\",\n  \"referrer\": \"https://bestsrilankatours.com/tours/cultural-triangle-explorer\",\n  \"ipAddress\": \"192.168.1.100\",\n  \"formSource\": \"tour_detail_page\",\n  \"turnstileToken\": \"0.NjQzNDRlMDZiM2Y5YjQ3YWI0ZjE5ZGJjNjk5MTI3MzI0NjExYTExYzgzZGUwOGY3ZDFjNGY3NjE5YzlkOTQ4YWQzOGYzNWY5NDlkMDQ5ZTU4NjE5YTc1NGQ0MjI2NDYzOGY4YjU4YzE0MmQzZDk5YzFlNzU5YzA1ZTFiOTM0MjI3MjE4MDU4ZWI5NDI5NTIwZTEyMjQ2ODcxMDQ3NDU1MGY2ZGZhNjBkOWRkYmJlODgzYjQ5YzQ1ODI5MmY1MjY\"\n}"
-								},
-								"url": {
-									"raw": "{{api_base_url}}/api/inquiries/comprehensive",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"inquiries",
-										"comprehensive"
-									]
-								},
-								"description": "Submit a comprehensive tour inquiry with full metadata and travel planning details"
-							}
-						},
-						{
-							"name": "Submit Comprehensive Inquiry - Destination",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"firstName\": \"Emma\",\n  \"lastName\": \"Wilson\",\n  \"email\": \"emma@example.com\",\n  \"phone\": \"\",\n  \"inquiryType\": \"destination\",\n  \"subjectName\": \"Sigiriya Rock Fortress\",\n  \"subjectId\": 42,\n  \"message\": \"Planning to visit Sigiriya and would love to know the best time to visit for fewer crowds and good weather. Are there any specific photography guidelines I should be aware of?\",\n  \"travelPlanning\": {\n    \"flexibleDates\": true,\n    \"travelMonth\": null,\n    \"travelDates\": \"dry season 2025\",\n    \"adults\": 4,\n    \"children\": 0\n  },\n  \"hearAboutUs\": \"Social Media\",\n  \"subscribed\": false,\n  \"submittedAt\": \"2025-01-20T15:45:00.000Z\",\n  \"userAgent\": \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36\",\n  \"referrer\": \"https://bestsrilankatours.com/destinations/sigiriya-rock-fortress\",\n  \"ipAddress\": \"10.0.0.50\",\n  \"formSource\": \"destination_detail_page\",\n  \"turnstileToken\": \"0.XyZ789AbCdEfGhIjKlMnOpQrStUvWxYz123456789aBcDeFgHiJkLmNoPqRsTuVwXyZ987654321\"\n}"
-								},
-								"url": {
-									"raw": "{{api_base_url}}/api/inquiries/comprehensive",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"inquiries",
-										"comprehensive"
-									]
-								},
-								"description": "Submit a comprehensive destination inquiry for Kandy with solo travel focus"
-							}
-						},
-						{
-							"name": "Submit Comprehensive Inquiry - Experience",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"firstName\": \"David\",\n  \"lastName\": \"Brown\",\n  \"email\": \"david@example.com\",\n  \"phone\": \"+44 20 7946 0958\",\n  \"inquiryType\": \"experience\",\n  \"subjectName\": \"Mindful Morning at a Buddhist Monastery\",\n  \"subjectId\": 8,\n  \"message\": \"Interested in the monastery experience for our family. We have two children (ages 8 and 12) - is this suitable for kids? What should we expect and what's the appropriate dress code?\",\n  \"travelPlanning\": {\n    \"flexibleDates\": false,\n    \"travelMonth\": \"February 2025\",\n    \"travelDates\": null,\n    \"adults\": 2,\n    \"children\": 2\n  },\n  \"hearAboutUs\": \"Friend/Family Recommendation\",\n  \"subscribed\": true,\n  \"submittedAt\": \"2025-01-20T16:20:00.000Z\",\n  \"userAgent\": \"Mozilla/5.0 (iPhone; CPU iPhone OS 17_1 like Mac OS X) AppleWebKit/605.1.15\",\n  \"referrer\": \"https://bestsrilankatours.com/experiences/mindful-morning-at-a-buddhist-monastery\",\n  \"ipAddress\": \"185.230.127.45\",\n  \"formSource\": \"experience_detail_page\",\n  \"turnstileToken\": \"0.PqR456StUvWxYzAbCdEfGhIjKlMnOpQrStUvWxYz456789123aBcDeFgHiJkLmNoPqRsTuVwXyZ321\"\n}"
-								},
-								"url": {
-									"raw": "{{api_base_url}}/api/inquiries/comprehensive",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"inquiries",
-										"comprehensive"
-									]
-								},
-								"description": "Submit a comprehensive experience inquiry for cooking class with dietary considerations"
-							}
-						},
-						{
-							"name": "Submit Comprehensive Inquiry - General",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Smith\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"+1 555 123 4567\",\n  \"inquiryType\": \"general\",\n  \"message\": \"Hi there! I'm in the early planning stages for a trip to Sri Lanka and have a few questions. What's the best time to visit for wildlife viewing? Are there any current travel restrictions I should be aware of? Also, do you offer custom itineraries for families?\",\n  \"travelPlanning\": {\n    \"flexibleDates\": true,\n    \"travelMonth\": \"September or October 2025\",\n    \"travelDates\": null,\n    \"adults\": 3,\n    \"children\": 1\n  },\n  \"hearAboutUs\": \"Friend recommendation\",\n  \"subscribed\": true,\n  \"submittedAt\": \"2025-01-20T09:15:00.000Z\",\n  \"userAgent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36\",\n  \"referrer\": \"https://bestsrilankatours.com/\",\n  \"ipAddress\": \"98.127.45.123\",\n  \"formSource\": \"contact_page\",\n  \"turnstileToken\": \"0.AbC123DefGhiJklMnoPqrStuVwxYz789012345aBcDeFgHiJkLmNoPqRsTuVwXyZ654321987\"\n}"
-								},
-								"url": {
-									"raw": "{{api_base_url}}/api/inquiries/comprehensive",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"inquiries",
-										"comprehensive"
-									]
-								},
-								"description": "Submit a comprehensive general inquiry with multiple questions and family travel planning"
-							}
-						},
-						{
-							"name": "Submit Comprehensive Inquiry - Newsletter Subscriber",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"firstName\": \"Lisa\",\n  \"lastName\": \"Thompson\",\n  \"email\": \"lisa.thompson@email.com\",\n  \"phone\": null,\n  \"inquiryType\": \"general\",\n  \"message\": \"I'm not ready to book yet, but I'm very interested in visiting Sri Lanka in the future. Could you add me to your newsletter so I can stay updated on tour packages and travel tips?\",\n  \"travelPlanning\": {\n    \"flexibleDates\": true,\n    \"travelMonth\": \"Sometime in 2026\",\n    \"travelDates\": null,\n    \"adults\": 2,\n    \"children\": 0\n  },\n  \"hearAboutUs\": \"Facebook\",\n  \"subscribed\": true,\n  \"submittedAt\": \"2025-01-20T13:45:00.000Z\",\n  \"userAgent\": \"Mozilla/5.0 (iPad; CPU OS 17_1 like Mac OS X) AppleWebKit/605.1.15\",\n  \"referrer\": \"https://www.facebook.com/\",\n  \"ipAddress\": \"172.58.134.78\",\n  \"formSource\": \"newsletter_signup\",\n  \"turnstileToken\": \"0.ZyX987VuTsRqPoNmLkJiHgFeDcBa654321098765aBcDeFgHiJkLmNoPqRsTuVwXyZ123456\"\n}"
-								},
-								"url": {
-									"raw": "{{api_base_url}}/api/inquiries/comprehensive",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"inquiries",
-										"comprehensive"
-									]
-								},
-								"description": "Submit a comprehensive inquiry primarily for newsletter subscription with future travel intent"
-							}
-						},
-						{
-							"name": "Subscribe to Newsletter",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"email\": \"subscriber@example.com\",\n  \"name\": \"Newsletter Subscriber\",\n  \"preferences\": {\n    \"tourUpdates\": true,\n    \"specialOffers\": true,\n    \"travelTips\": false\n  }\n}"
-								},
-								"url": {
-									"raw": "{{api_base_url}}/api/subscribers",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"subscribers"
-									]
-								},
-								"description": "Subscribe to the newsletter"
-							}
-						}
-					],
-					"description": "Contact forms, inquiries, and newsletter endpoints"
-				},
-				{
-					"name": "Testimonials",
-					"item": [
-						{
-							"name": "Get All Testimonials",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "{{api_base_url}}/api/testimonials",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"testimonials"
-									]
-								},
-								"description": "Retrieve all customer testimonials"
-							}
-						},
-						{
-							"name": "Submit New Testimonial",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n  \"customerName\": \"Michael Johnson\",\n  \"email\": \"michael.johnson@example.com\",\n  \"rating\": 5,\n  \"comment\": \"Amazing experience! The tour was well-organized and our guide was incredibly knowledgeable about Sri Lankan culture and history.\",\n  \"tourName\": \"Cultural Heritage Tour\",\n  \"visitDate\": \"2024-03-15\",\n  \"country\": \"United States\"\n}"
-								},
-								"url": {
-									"raw": "{{api_base_url}}/api/testimonials",
-									"host": [
-										"{{api_base_url}}"
-									],
-									"path": [
-										"api",
-										"testimonials"
-									]
-								},
-								"description": "Submit a new customer testimonial"
-							}
-						}
-					],
-					"description": "Customer testimonial endpoints"
-				}
-			],
-			"description": "BSLTours.API endpoints for the main application"
-		},
-		{
-			"name": "Strapi CMS (Downstream)",
-			"item": [
-				{
-					"name": "Tours",
-					"item": [
-						{
-							"name": "Get Tours from Strapi",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{strapi_token}}"
-									}
-								],
-								"url": {
-									"raw": "{{strapi_base_url}}/api/tours?populate=*",
-									"host": [
-										"{{strapi_base_url}}"
-									],
-									"path": [
-										"api",
-										"tours"
-									],
-									"query": [
-										{
-											"key": "populate",
-											"value": "*"
-										}
-									]
-								},
-								"description": "Direct access to Strapi tours endpoint with full population"
-							}
-						},
-						{
-							"name": "Get Tour by Slug from Strapi",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{strapi_token}}"
-									}
-								],
-								"url": {
-									"raw": "{{strapi_base_url}}/api/tours?filters[slug][$eq]={{tour_slug}}&populate=*",
-									"host": [
-										"{{strapi_base_url}}"
-									],
-									"path": [
-										"api",
-										"tours"
-									],
-									"query": [
-										{
-											"key": "filters[slug][$eq]",
-											"value": "{{tour_slug}}"
-										},
-										{
-											"key": "populate",
-											"value": "*"
-										}
-									]
-								},
-								"description": "Get specific tour by slug from Strapi"
-							}
-						},
-						{
-							"name": "Get Featured Tours from Strapi",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{strapi_token}}"
-									}
-								],
-								"url": {
-									"raw": "{{strapi_base_url}}/api/tours?filters[featured][$eq]=true&populate=*",
-									"host": [
-										"{{strapi_base_url}}"
-									],
-									"path": [
-										"api",
-										"tours"
-									],
-									"query": [
-										{
-											"key": "filters[featured][$eq]",
-											"value": "true"
-										},
-										{
-											"key": "populate",
-											"value": "*"
-										}
-									]
-								},
-								"description": "Get featured tours directly from Strapi"
-							}
-						},
-						{
-							"name": "Get Tour Cards from Strapi",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{strapi_token}}"
-									}
-								],
-								"url": {
-									"raw": "{{strapi_base_url}}/api/tours?populate[card][populate]=image",
-									"host": [
-										"{{strapi_base_url}}"
-									],
-									"path": [
-										"api",
-										"tours"
-									],
-									"query": [
-										{
-											"key": "populate[card][populate]",
-											"value": "image"
-										}
-									]
-								},
-								"description": "Get tour cards with images from Strapi"
-							}
-						}
-					],
-					"description": "Direct Strapi CMS endpoints for tours"
-				},
-				{
-					"name": "Destinations",
-					"item": [
-						{
-							"name": "Get Destinations from Strapi",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{strapi_token}}"
-									}
-								],
-								"url": {
-									"raw": "{{strapi_base_url}}/api/destinations?populate=*",
-									"host": [
-										"{{strapi_base_url}}"
-									],
-									"path": [
-										"api",
-										"destinations"
-									],
-									"query": [
-										{
-											"key": "populate",
-											"value": "*"
-										}
-									]
-								},
-								"description": "Get all destinations from Strapi with full population"
-							}
-						},
-						{
-							"name": "Get Destination by Slug from Strapi",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{strapi_token}}"
-									}
-								],
-								"url": {
-									"raw": "{{strapi_base_url}}/api/destinations?filters[slug][$eq]={{destination_slug}}&populate=*",
-									"host": [
-										"{{strapi_base_url}}"
-									],
-									"path": [
-										"api",
-										"destinations"
-									],
-									"query": [
-										{
-											"key": "filters[slug][$eq]",
-											"value": "{{destination_slug}}"
-										},
-										{
-											"key": "populate",
-											"value": "*"
-										}
-									]
-								},
-								"description": "Get specific destination by slug from Strapi"
-							}
-						},
-						{
-							"name": "Get Featured Destinations from Strapi",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{strapi_token}}"
-									}
-								],
-								"url": {
-									"raw": "{{strapi_base_url}}/api/destinations?filters[featured][$eq]=true&populate=*",
-									"host": [
-										"{{strapi_base_url}}"
-									],
-									"path": [
-										"api",
-										"destinations"
-									],
-									"query": [
-										{
-											"key": "filters[featured][$eq]",
-											"value": "true"
-										},
-										{
-											"key": "populate",
-											"value": "*"
-										}
-									]
-								},
-								"description": "Get featured destinations from Strapi"
-							}
-						}
-					],
-					"description": "Direct Strapi CMS endpoints for destinations"
-				},
-				{
-					"name": "Experiences",
-					"item": [
-						{
-							"name": "Get Experiences from Strapi",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{strapi_token}}"
-									}
-								],
-								"url": {
-									"raw": "{{strapi_base_url}}/api/experiences?populate=*",
-									"host": [
-										"{{strapi_base_url}}"
-									],
-									"path": [
-										"api",
-										"experiences"
-									],
-									"query": [
-										{
-											"key": "populate",
-											"value": "*"
-										}
-									]
-								},
-								"description": "Get all experiences from Strapi"
-							}
-						},
-						{
-							"name": "Get Experience by Slug from Strapi",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{strapi_token}}"
-									}
-								],
-								"url": {
-									"raw": "{{strapi_base_url}}/api/experiences?filters[slug][$eq]={{experience_slug}}&populate=*",
-									"host": [
-										"{{strapi_base_url}}"
-									],
-									"path": [
-										"api",
-										"experiences"
-									],
-									"query": [
-										{
-											"key": "filters[slug][$eq]",
-											"value": "{{experience_slug}}"
-										},
-										{
-											"key": "populate",
-											"value": "*"
-										}
-									]
-								},
-								"description": "Get specific experience by slug from Strapi"
-							}
-						},
-						{
-							"name": "Get Featured Experiences from Strapi",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{strapi_token}}"
-									}
-								],
-								"url": {
-									"raw": "{{strapi_base_url}}/api/experiences?filters[featured][$eq]=true&populate=*",
-									"host": [
-										"{{strapi_base_url}}"
-									],
-									"path": [
-										"api",
-										"experiences"
-									],
-									"query": [
-										{
-											"key": "filters[featured][$eq]",
-											"value": "true"
-										},
-										{
-											"key": "populate",
-											"value": "*"
-										}
-									]
-								},
-								"description": "Get featured experiences from Strapi"
-							}
-						}
-					],
-					"description": "Direct Strapi CMS endpoints for experiences"
-				},
-				{
-					"name": "Media & Files",
-					"item": [
-						{
-							"name": "Get Media Files",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{strapi_token}}"
-									}
-								],
-								"url": {
-									"raw": "{{strapi_base_url}}/api/upload/files",
-									"host": [
-										"{{strapi_base_url}}"
-									],
-									"path": [
-										"api",
-										"upload",
-										"files"
-									]
-								},
-								"description": "Get all uploaded media files from Strapi"
-							}
-						},
-						{
-							"name": "Upload Media File",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{strapi_token}}"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "files",
-											"type": "file",
-											"src": []
-										}
-									]
-								},
-								"url": {
-									"raw": "{{strapi_base_url}}/api/upload",
-									"host": [
-										"{{strapi_base_url}}"
-									],
-									"path": [
-										"api",
-										"upload"
-									]
-								},
-								"description": "Upload a media file to Strapi"
-							}
-						}
-					],
-					"description": "Strapi media and file management endpoints"
-				}
-			],
-			"description": "Direct access to Strapi CMS endpoints for testing downstream services"
-		},
-		{
-			"name": "Health & Monitoring",
-			"item": [
-				{
-					"name": "API Health Check",
+					"name": "Get All Tours",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{api_base_url}}/health",
-							"host": [
-								"{{api_base_url}}"
-							],
-							"path": [
-								"health"
-							]
+							"raw": "{{api_base_url}}/api/tours",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "tours"]
 						},
-						"description": "Check API health status"
+						"description": "Retrieve all tour packages from the API"
 					}
 				},
 				{
-					"name": "API Swagger Documentation",
+					"name": "Get Tour by Slug",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{api_base_url}}/swagger",
-							"host": [
-								"{{api_base_url}}"
-							],
-							"path": [
-								"swagger"
-							]
+							"raw": "{{api_base_url}}/api/tours/{{tour_slug}}",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "tours", "{{tour_slug}}"]
 						},
-						"description": "Access Swagger API documentation"
+						"description": "Get a specific tour package by its slug identifier"
 					}
 				},
 				{
-					"name": "Strapi Health Check",
+					"name": "Get Featured Tours",
 					"request": {
 						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_base_url}}/api/tours/featured",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "tours", "featured"]
+						},
+						"description": "Retrieve all featured tour packages"
+					}
+				},
+				{
+					"name": "Get All Tour Cards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_base_url}}/api/tours/card",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "tours", "card"]
+						},
+						"description": "Get tour summary cards for listing pages"
+					}
+				},
+				{
+					"name": "Get Featured Tour Cards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_base_url}}/api/tours/card/featured",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "tours", "card", "featured"]
+						},
+						"description": "Get featured tour summary cards"
+					}
+				}
+			],
+			"description": "Tour package endpoints"
+		},
+		{
+			"name": "Destinations",
+			"item": [
+				{
+					"name": "Get All Destinations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_base_url}}/api/destinations",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "destinations"]
+						},
+						"description": "Retrieve all destinations"
+					}
+				},
+				{
+					"name": "Get Destination by Slug",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_base_url}}/api/destinations/{{destination_slug}}",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "destinations", "{{destination_slug}}"]
+						},
+						"description": "Get a specific destination by its slug"
+					}
+				},
+				{
+					"name": "Get Featured Destinations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_base_url}}/api/destinations/featured",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "destinations", "featured"]
+						},
+						"description": "Retrieve featured destinations"
+					}
+				},
+				{
+					"name": "Get All Destination Cards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_base_url}}/api/destinations/card",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "destinations", "card"]
+						},
+						"description": "Get destination summary cards"
+					}
+				},
+				{
+					"name": "Get Featured Destination Cards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_base_url}}/api/destinations/card/featured",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "destinations", "card", "featured"]
+						},
+						"description": "Get featured destination summary cards"
+					}
+				}
+			],
+			"description": "Destination endpoints"
+		},
+		{
+			"name": "Experiences",
+			"item": [
+				{
+					"name": "Get All Experiences",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_base_url}}/api/experiences",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "experiences"]
+						},
+						"description": "Retrieve all experiences"
+					}
+				},
+				{
+					"name": "Get Experience by Slug",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_base_url}}/api/experiences/{{experience_slug}}",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "experiences", "{{experience_slug}}"]
+						},
+						"description": "Get a specific experience by its slug"
+					}
+				},
+				{
+					"name": "Get Featured Experiences",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_base_url}}/api/experiences/featured",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "experiences", "featured"]
+						},
+						"description": "Retrieve featured experiences"
+					}
+				},
+				{
+					"name": "Get All Experience Cards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_base_url}}/api/experiences/card",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "experiences", "card"]
+						},
+						"description": "Get experience summary cards"
+					}
+				},
+				{
+					"name": "Get Featured Experience Cards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_base_url}}/api/experiences/card/featured",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "experiences", "card", "featured"]
+						},
+						"description": "Get featured experience summary cards"
+					}
+				}
+			],
+			"description": "Experience endpoints"
+		},
+		{
+			"name": "Contact",
+			"item": [
+				{
+					"name": "Send Contact Form",
+					"request": {
+						"method": "POST",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer {{strapi_token}}"
+								"key": "Content-Type",
+								"value": "application/json"
 							}
 						],
-						"url": {
-							"raw": "{{strapi_base_url}}/api",
-							"host": [
-								"{{strapi_base_url}}"
-							],
-							"path": [
-								"api"
-							]
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"formType\": \"Contact Inquiry\",\n  \"email\": \"customer@example.com\",\n  \"name\": \"John Doe\",\n  \"fields\": {\n    \"message\": \"I'm interested in your Sri Lanka tour packages.\",\n    \"phone\": \"+1-555-123-4567\",\n    \"preferredContactTime\": \"Evening\"\n  }\n}"
 						},
-						"description": "Check Strapi CMS health and connectivity"
+						"url": {
+							"raw": "{{api_base_url}}/api/contact/send",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "contact", "send"]
+						},
+						"description": "Submit a dynamic contact form with custom fields. Sends notification to admin and confirmation to user."
 					}
 				}
 			],
-			"description": "Health checks and monitoring endpoints"
+			"description": "Contact form endpoint"
+		},
+		{
+			"name": "Inquiries",
+			"item": [
+				{
+					"name": "Submit Inquiry (Legacy)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Jane Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"message\": \"We are a group of 8 people planning to visit Sri Lanka in December.\",\n  \"phone\": \"+1-555-987-6543\",\n  \"tourInterest\": \"Cultural Tours\",\n  \"travelDate\": \"2024-12-15T00:00:00Z\",\n  \"travelPartySize\": 8\n}"
+						},
+						"url": {
+							"raw": "{{api_base_url}}/api/inquiries",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "inquiries"]
+						},
+						"description": "Submit a customer inquiry using legacy format"
+					}
+				},
+				{
+					"name": "Submit Comprehensive Inquiry - Tour",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Sarah\",\n  \"lastName\": \"Johnson\",\n  \"email\": \"sarah.johnson@gmail.com\",\n  \"phone\": \"+44 7891 234567\",\n  \"inquiryType\": \"tour\",\n  \"subjectName\": \"Cultural Triangle Explorer\",\n  \"subjectId\": 15,\n  \"message\": \"Hi! My husband and I are interested in the Cultural Triangle Explorer tour for our family trip.\",\n  \"travelPlanning\": {\n    \"flexibleDates\": true,\n    \"travelMonth\": null,\n    \"travelDates\": \"spring 2025\",\n    \"adults\": 2,\n    \"children\": 1\n  },\n  \"hearAboutUs\": \"TripAdvisor\",\n  \"subscribed\": true,\n  \"submittedAt\": \"2025-01-20T14:30:00.000Z\",\n  \"userAgent\": \"Mozilla/5.0\",\n  \"referrer\": \"https://bestsrilankatours.com/tours/cultural-triangle-explorer\",\n  \"ipAddress\": \"192.168.1.100\",\n  \"formSource\": \"tour_detail_page\",\n  \"turnstileToken\": \"your-turnstile-token-here\"\n}"
+						},
+						"url": {
+							"raw": "{{api_base_url}}/api/inquiries/comprehensive",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "inquiries", "comprehensive"]
+						},
+						"description": "Submit a comprehensive tour inquiry with full metadata and travel planning details"
+					}
+				},
+				{
+					"name": "Submit Comprehensive Inquiry - Destination",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"Emma\",\n  \"lastName\": \"Wilson\",\n  \"email\": \"emma@example.com\",\n  \"phone\": \"\",\n  \"inquiryType\": \"destination\",\n  \"subjectName\": \"Sigiriya Rock Fortress\",\n  \"subjectId\": 42,\n  \"message\": \"Planning to visit Sigiriya. What's the best time to visit?\",\n  \"travelPlanning\": {\n    \"flexibleDates\": true,\n    \"travelMonth\": null,\n    \"travelDates\": \"dry season 2025\",\n    \"adults\": 4,\n    \"children\": 0\n  },\n  \"hearAboutUs\": \"Social Media\",\n  \"subscribed\": false,\n  \"submittedAt\": \"2025-01-20T15:45:00.000Z\",\n  \"formSource\": \"destination_detail_page\",\n  \"turnstileToken\": \"your-turnstile-token-here\"\n}"
+						},
+						"url": {
+							"raw": "{{api_base_url}}/api/inquiries/comprehensive",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "inquiries", "comprehensive"]
+						},
+						"description": "Submit a comprehensive destination inquiry"
+					}
+				},
+				{
+					"name": "Submit Comprehensive Inquiry - Experience",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"David\",\n  \"lastName\": \"Brown\",\n  \"email\": \"david@example.com\",\n  \"phone\": \"+44 20 7946 0958\",\n  \"inquiryType\": \"experience\",\n  \"subjectName\": \"Mindful Morning at a Buddhist Monastery\",\n  \"subjectId\": 8,\n  \"message\": \"Is this experience suitable for children ages 8 and 12?\",\n  \"travelPlanning\": {\n    \"flexibleDates\": false,\n    \"travelMonth\": \"February 2025\",\n    \"travelDates\": null,\n    \"adults\": 2,\n    \"children\": 2\n  },\n  \"hearAboutUs\": \"Friend/Family Recommendation\",\n  \"subscribed\": true,\n  \"submittedAt\": \"2025-01-20T16:20:00.000Z\",\n  \"formSource\": \"experience_detail_page\",\n  \"turnstileToken\": \"your-turnstile-token-here\"\n}"
+						},
+						"url": {
+							"raw": "{{api_base_url}}/api/inquiries/comprehensive",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "inquiries", "comprehensive"]
+						},
+						"description": "Submit a comprehensive experience inquiry"
+					}
+				},
+				{
+					"name": "Submit Comprehensive Inquiry - General",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Smith\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"+1 555 123 4567\",\n  \"inquiryType\": \"general\",\n  \"message\": \"What's the best time to visit Sri Lanka for wildlife viewing?\",\n  \"travelPlanning\": {\n    \"flexibleDates\": true,\n    \"travelMonth\": \"September or October 2025\",\n    \"travelDates\": null,\n    \"adults\": 3,\n    \"children\": 1\n  },\n  \"hearAboutUs\": \"Friend recommendation\",\n  \"subscribed\": true,\n  \"submittedAt\": \"2025-01-20T09:15:00.000Z\",\n  \"formSource\": \"contact_page\",\n  \"turnstileToken\": \"your-turnstile-token-here\"\n}"
+						},
+						"url": {
+							"raw": "{{api_base_url}}/api/inquiries/comprehensive",
+							"host": ["{{api_base_url}}"],
+							"path": ["api", "inquiries", "comprehensive"]
+						},
+						"description": "Submit a general inquiry with travel planning details"
+					}
+				}
+			],
+			"description": "Customer inquiry endpoints"
 		}
 	],
 	"event": [
@@ -1149,21 +371,15 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"// Pre-request script for logging and debugging",
-					"console.log('Making request to: ' + pm.request.url);",
-					"",
-					"// Set dynamic timestamps for testing",
-					"pm.globals.set('timestamp', new Date().toISOString());",
-					"",
-					"// Auto-generate test data if needed",
+					"// Set default slugs if not defined",
 					"if (!pm.environment.get('tour_slug')) {",
-					"    pm.environment.set('tour_slug', 'sample-tour-slug');",
+					"    pm.environment.set('tour_slug', 'cultural-triangle-explorer');",
 					"}",
 					"if (!pm.environment.get('destination_slug')) {",
-					"    pm.environment.set('destination_slug', 'sample-destination-slug');",
+					"    pm.environment.set('destination_slug', 'sigiriya');",
 					"}",
 					"if (!pm.environment.get('experience_slug')) {",
-					"    pm.environment.set('experience_slug', 'sample-experience-slug');",
+					"    pm.environment.set('experience_slug', 'tea-plantation-tour');",
 					"}"
 				]
 			}
@@ -1173,39 +389,17 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"// Global test script for all requests",
-					"pm.test('Response time is less than 5000ms', function () {",
+					"pm.test('Response time is acceptable', function () {",
 					"    pm.expect(pm.response.responseTime).to.be.below(5000);",
-					"});",
-					"",
-					"pm.test('Response has valid JSON structure', function () {",
-					"    try {",
-					"        const jsonData = pm.response.json();",
-					"        pm.expect(jsonData).to.be.an('object');",
-					"    } catch (e) {",
-					"        // Skip JSON validation for non-JSON responses (like HTML docs)",
-					"        if (pm.response.headers.get('Content-Type')?.includes('application/json')) {",
-					"            throw e;",
-					"        }",
-					"    }",
-					"});",
-					"",
-					"// Log response for debugging",
-					"console.log('Response Status:', pm.response.status);",
-					"console.log('Response Time:', pm.response.responseTime + 'ms');"
+					"});"
 				]
 			}
 		}
 	],
 	"variable": [
 		{
-			"key": "api_version",
-			"value": "v1",
-			"type": "string"
-		},
-		{
-			"key": "collection_version",
-			"value": "1.0.0",
+			"key": "api_base_url",
+			"value": "http://localhost:5001",
 			"type": "string"
 		}
 	]
