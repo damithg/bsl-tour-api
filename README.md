@@ -150,15 +150,33 @@ Run the diagnostic script:
 
 ## 📋 Available Endpoints
 
-### Inquiries
+### Tours
+- **GET** `/api/tours` - Get all tours
+- **GET** `/api/tours/{slug}` - Get tour by slug
+- **GET** `/api/tours/featured` - Get featured tours
+- **GET** `/api/tours/card` - Get tour cards (summary)
+- **GET** `/api/tours/card/featured` - Get featured tour cards
 
-- **POST** `/api/inquiries` - Create legacy inquiry
-- **POST** `/api/inquiries/dynamic` - Create dynamic inquiry
-- **POST** `/api/inquiries/comprehensive` - Create comprehensive inquiry (recommended)
+### Destinations
+- **GET** `/api/destinations` - Get all destinations
+- **GET** `/api/destinations/{slug}` - Get destination by slug
+- **GET** `/api/destinations/featured` - Get featured destinations
+- **GET** `/api/destinations/card` - Get destination cards
+- **GET** `/api/destinations/card/featured` - Get featured destination cards
+
+### Experiences
+- **GET** `/api/experiences` - Get all experiences
+- **GET** `/api/experiences/{slug}` - Get experience by slug
+- **GET** `/api/experiences/featured` - Get featured experiences
+- **GET** `/api/experiences/card` - Get experience cards
+- **GET** `/api/experiences/card/featured` - Get featured experience cards
 
 ### Contact
+- **POST** `/api/contact/send` - Send contact form (dynamic fields)
 
-- **POST** `/api/contact` - Send contact form submission
+### Inquiries
+- **POST** `/api/inquiries` - Create legacy inquiry
+- **POST** `/api/inquiries/comprehensive` - Create comprehensive inquiry (recommended)
 
 See [TESTING.md](TESTING.md) for request/response examples and testing guide.
 
@@ -337,9 +355,34 @@ dotnet run --environment Staging
 
 ## 🚢 Deployment
 
+### DigitalOcean App Platform (Current)
+
+The API is deployed on DigitalOcean App Platform using Docker.
+
+**Important Configuration:**
+- **Source Directory**: Leave empty (repo root) - the Dockerfile is at the root level
+- **Dockerfile Path**: `/Dockerfile`
+
+**Required Environment Variables** (set in DigitalOcean App Settings):
+- `PostmarkServerToken` - Your Postmark API token
+- `SendGridApiKey` - Your SendGrid API key (if using SendGrid)
+- `Turnstile__SecretKey` - Cloudflare Turnstile secret (for CAPTCHA)
+
+**Build Process:**
+The root `Dockerfile` handles the multi-project build:
+1. Copies solution file and all project files
+2. Restores NuGet packages
+3. Builds and publishes `BSLTours.API`
+4. Creates runtime image
+
 ### Environment Variables for Production
 
 Set these in your hosting environment:
+
+**DigitalOcean App Platform:**
+1. Go to Apps → Your App → Settings
+2. Click on your component → Environment Variables
+3. Add required variables (mark sensitive ones as encrypted)
 
 **Azure App Service:**
 ```bash
@@ -370,7 +413,7 @@ env:
 ### Build for Production
 
 ```bash
-dotnet publish -c Release -o ./publish
+dotnet publish BSLTours.API/BSLTours.API.csproj -c Release -o ./publish
 ```
 
 ## 🤝 Contributing
@@ -455,8 +498,58 @@ See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed roadmap.
 
 ---
 
-**Version**: 1.0.0
-**Last Updated**: October 2025
+## 📝 Developer Notes
+
+### Repository Structure (February 2025)
+
+The git repository was restructured to properly include the Communications module:
+
+```
+bsl-tours-api/              ← Git repo root
+├── .git/
+├── Dockerfile              ← Root-level Dockerfile for multi-project build
+├── BSLTours.sln
+├── BSLTours.API/           ← Main API project
+│   ├── Controllers/
+│   ├── Services/
+│   ├── Models/
+│   └── ...
+├── Communications/         ← Email provider projects (sibling to API)
+│   ├── BSLTours.Communications.Abstractions/
+│   ├── BSLTours.Communications.Core/
+│   ├── BSLTours.Communications.SendGrid/
+│   └── BSLTours.Communications.Postmark/
+└── docs & config files...
+```
+
+**Key Points:**
+- The `Communications` folder is a **sibling** to `BSLTours.API`, not nested inside it
+- Project references use `../Communications/...` paths
+- The root `Dockerfile` handles building both API and Communications projects
+- `launchSettings.json` is gitignored (contains local API keys)
+
+### API Keys & Secrets
+
+**Never commit API keys to git.** Use:
+- Environment variables for local development
+- DigitalOcean environment variables for production
+- `launchSettings.json` is gitignored for local secrets
+
+### Postman Collection
+
+The Postman collection (`BSLTours.API/BSLTours-API-Collection.postman_collection.json`) is kept in sync with actual API endpoints. Import it into Postman for testing.
+
+### Current Email Configuration
+
+- **Production**: Postmark (configured via `PostmarkServerToken` env var)
+- **Admin notifications**: Sent to `info@bestsrilankatours.com`
+- **Contact form notifications**: Sent to `info@siprea.com`
+- **Auto-reply template**: Postmark template ID `41894431`
+
+---
+
+**Version**: 1.1.0
+**Last Updated**: February 2025
 **Maintained By**: BSLTours Development Team
 
 For detailed architecture and design decisions, see [ARCHITECTURE.md](ARCHITECTURE.md).

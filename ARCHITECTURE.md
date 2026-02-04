@@ -434,6 +434,26 @@ When adding new features:
 
 ---
 
-**Last Updated**: October 2025
-**Version**: 1.0.0
+## Recent Changes (February 2025)
+
+### Repository Restructure
+- Git repository root moved up to include both `BSLTours.API` and `Communications` as siblings
+- Root-level `Dockerfile` added for multi-project Docker builds
+- `launchSettings.json` gitignored (contains API keys)
+- `.claude/` folder gitignored
+
+### Deployment
+- DigitalOcean App Platform deployment configured
+- Source directory: repo root (not BSLTours.API)
+- Environment variables for API keys set in DigitalOcean dashboard
+
+### API Endpoints Cleanup
+- Removed `/api/inquiries/dynamic` (commented out)
+- No `/api/subscribers` or `/api/testimonials` endpoints exist
+- Postman collection synced with actual endpoints
+
+---
+
+**Last Updated**: February 2025
+**Version**: 1.1.0
 **Maintained By**: BSLTours Development Team
